@@ -1,11 +1,11 @@
-//var personDb = require("../../../models/db/personDb");
-//var personModel = require("../../../models/db/personModel");
-//var mongoose = require("mongoose");
-//
-//
-//describe("personDb", function () {
-//    mongoose.createConnection("mongodb://localhost/uspentittest");
-//    var model = personModel(mongoose);
+var personDb = require("../../../models/db/personDb");
+var personModel = require("../../../models/db/personModel");
+var mongoose = require("mongoose");
+
+
+describe("personDb", function () {
+//    var mongoosedb = mongoose.createConnection("mongodb://localhost/uspentittest");
+//    var model = personModel(mongoosedb);
 //    var db = personDb(model);
 //    var emptyStart = false;
 //
@@ -100,4 +100,4 @@
 //            });
 //        }
 //    });
-//});
+});

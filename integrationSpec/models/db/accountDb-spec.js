@@ -1,12 +1,15 @@
 var accountDb = require("../../../models/db/accountDb");
 var accountModel = require("../../../models/db/accountModel");
-var mongoose = require("mongoose");
-
+var dbGen = require("../../../models/db/db");
+//var mongoose = require("mongoose");
 
 describe("accountDb", function () {
-    mongoose.createConnection("mongodb://localhost/sayveettest");
-    var model = accountModel(mongoose);
-    var db = accountDb(model);
+    var db = dbGen("mongodb://localhost/sayveettest");
+    accountModel();
+    var repo = accountDb(db.model("Account"));
+//    mongoose.connect("mongodb://localhost/sayveettest");
+//    var model = accountModel(mongoose);
+//    var db = accountDb(model);
     var emptyStart = false;
 
     function hasEmptyStart(done) {
@@ -20,7 +23,7 @@ describe("accountDb", function () {
     }
 
     it("should get no accounts first", function (done) {
-        db.getAll(function(err, accounts) {
+        repo.getAll(function(err, accounts) {
             expect(err).toBeNull();
             expect(accounts.length).toBe(0);
 

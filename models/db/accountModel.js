@@ -1,4 +1,6 @@
-module.exports = function (mongoose) {
+var mongoose = require('mongoose');
+
+module.exports = function () {
     var accountSchema = mongoose.Schema({
         id: String,
         name: String
