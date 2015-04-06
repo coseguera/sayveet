@@ -1,4 +1,4 @@
-var personDb = require("../../../models/db/personDb");
+var repo = require("../../../models/db/personRepository");
 
 var observer = { callback: function () { } };
 
@@ -33,7 +33,7 @@ describe("get all", function () {
 
         spyOn(observer, "callback");
 
-        var db = personDb(cMock);
+        var db = repo(cMock);
 
         db.getAll(observer.callback);
 
@@ -54,7 +54,7 @@ describe("get one", function () {
 
         spyOn(observer, "callback");
 
-        var db = personDb(cMock);
+        var db = repo(cMock);
 
         db.get(id, observer.callback);
 
@@ -71,7 +71,7 @@ describe("create", function () {
 
         spyOn(observer, "callback");
 
-        var db = personDb(CrudSaveMock);
+        var db = repo(CrudSaveMock);
 
         db.create(obj, observer.callback);
 
@@ -83,7 +83,7 @@ describe("create", function () {
 
         spyOn(observer, "callback");
 
-        var db = personDb(CrudSaveMock);
+        var db = repo(CrudSaveMock);
 
         db.create(obj, observer.callback);
 
@@ -95,7 +95,7 @@ describe("create", function () {
 
         spyOn(observer, "callback");
 
-        var db = personDb(CrudSaveMock);
+        var db = repo(CrudSaveMock);
 
         db.create(obj, observer.callback);
 
@@ -114,7 +114,7 @@ describe("update", function () {
 
         spyOn(observer, "callback");
 
-        var db = personDb(cMock);
+        var db = repo(cMock);
 
         db.update(obj, observer.callback);
 
@@ -132,7 +132,7 @@ describe("update", function () {
 
         spyOn(observer, "callback");
 
-        var db = personDb(cMock);
+        var db = repo(cMock);
 
         db.update(obj, observer.callback);
 
@@ -150,7 +150,7 @@ describe("update", function () {
 
         spyOn(observer, "callback");
 
-        var db = personDb(cMock);
+        var db = repo(cMock);
 
         db.update(obj, observer.callback);
 
@@ -171,7 +171,7 @@ describe("delete", function () {
 
         spyOn(observer, "callback");
 
-        var db = personDb(cMock);
+        var db = repo(cMock);
 
         db.delete(id, observer.callback);
 
@@ -189,7 +189,7 @@ describe("delete", function () {
 
         spyOn(observer, "callback");
 
-        var db = personDb(cMock);
+        var db = repo(cMock);
 
         db.delete(id, observer.callback);
 
