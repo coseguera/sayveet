@@ -1,33 +1,11 @@
 var repo = require("../../../models/db/accountRepository");
+var mocks = require("./crudMocks");
 
 var observer = { callback: function () { } };
 
-var crudMock = function () {
-    return {
-        find: function (callback) {
-            callback(this.err, this.result);
-        },
-        findOne: function (obj, callback) {
-            callback(this.err, this.result);
-        },
-        findOneAndUpdate: function (obj, obj2, callback) {
-            callback(this.err, this.result);
-        },
-        findOneAndRemove: function (obj, callback) {
-            callback(this.err, this.result);
-        }
-    };
-};
-
-var CrudSaveMock = function () { };
-CrudSaveMock.prototype.save = function (callback) {
-    callback(this.err);
-};
-CrudSaveMock.prototype.err = "err";
-
 describe("get all", function () {
     it("should call callback with results", function () {
-        var cMock = crudMock();
+        var cMock = mocks.crudMock();
         cMock.err = 1;
         cMock.result = 2;
 
@@ -46,7 +24,7 @@ describe("get all", function () {
 
 describe("get one", function () {
     it("should call callback with result", function () {
-        var cMock = crudMock();
+        var cMock = mocks.crudMock();
         cMock.err = 1;
         cMock.result = 2;
 
@@ -71,7 +49,7 @@ describe("create", function () {
 
         spyOn(observer, "callback");
 
-        var db = repo(CrudSaveMock);
+        var db = repo(mocks.CrudSaveMock);
 
         db.create(obj, observer.callback);
 
@@ -83,7 +61,7 @@ describe("create", function () {
 
         spyOn(observer, "callback");
 
-        var db = repo(CrudSaveMock);
+        var db = repo(mocks.CrudSaveMock);
 
         db.create(obj, observer.callback);
 
@@ -95,7 +73,7 @@ describe("create", function () {
 
         spyOn(observer, "callback");
 
-        var db = repo(CrudSaveMock);
+        var db = repo(mocks.CrudSaveMock);
 
         db.create(obj, observer.callback);
 
@@ -106,7 +84,7 @@ describe("create", function () {
 
 describe("update", function () {
     it("should call callback with result", function () {
-        var cMock = crudMock();
+        var cMock = mocks.crudMock();
         cMock.err = 1;
         cMock.result = 2;
 
@@ -124,7 +102,7 @@ describe("update", function () {
             cMock.result);
     });
     it("should send custom error if no id is provided", function () {
-        var cMock = crudMock();
+        var cMock = mocks.crudMock();
         cMock.err = 1;
         cMock.result = 2;
 
@@ -142,7 +120,7 @@ describe("update", function () {
             cMock.result);
     });
     it("should send custom error if no name is provided", function () {
-        var cMock = crudMock();
+        var cMock = mocks.crudMock();
         cMock.err = 1;
         cMock.result = 2;
 
@@ -163,7 +141,7 @@ describe("update", function () {
 
 describe("delete", function () {
     it("should call callback with result", function () {
-        var cMock = crudMock();
+        var cMock = mocks.crudMock();
         cMock.err = 1;
         cMock.result = 2;
 
@@ -181,7 +159,7 @@ describe("delete", function () {
             cMock.result);
     });
     it("should send custom error if no id is provided", function () {
-        var cMock = crudMock();
+        var cMock = mocks.crudMock();
         cMock.err = 1;
         cMock.result = 2;
 
