@@ -1,9 +1,11 @@
 var accountRepo = require("../../../models/db/accountRepository");
 var accountModel = require("../../../models/db/accountModel");
 var dbGen = require("../../../models/db/db");
+var dbHelper = require("./dbHelper");
 
 describe("accountDb", function () {
     var db = dbGen("mongodb://localhost/sayveettest");
+    dbHelper.startTimeoutForConnection();
     accountModel();
     var repo = accountRepo(db.model("Account"));
     var emptyStart = false;
