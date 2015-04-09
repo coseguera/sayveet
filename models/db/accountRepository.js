@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = function (Account) {
     var model = {};
 
@@ -10,7 +12,9 @@ module.exports = function (Account) {
     };
 
     model.create = function (obj, callback) {
-        if (!obj.id || !obj.name) return callback("no id or name provided");
+        if (!obj.id || !obj.name) {
+            return callback('no id or name provided');
+        }
 
         var account = new Account();
         account.id = obj.id;
@@ -20,13 +24,17 @@ module.exports = function (Account) {
     };
 
     model.update = function (obj, callback) {
-        if (!obj.id || !obj.name) return callback("no id or name provided");
+        if (!obj.id || !obj.name) {
+            return callback('no id or name provided');
+        }
 
         Account.findOneAndUpdate({ id: obj.id }, obj, callback);
     };
 
     model.delete = function (id, callback) {
-        if (!id) return callback("no id provided");
+        if (!id) { 
+            return callback('no id provided'); 
+        }
 
         Account.findOneAndRemove({ id: id }, callback);
     };

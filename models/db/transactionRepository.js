@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = function (Transaction) {
     var model = {};
 
@@ -10,12 +12,11 @@ module.exports = function (Transaction) {
     };
 
     model.query = function (query, callback) {
-        var result = {};
         var find = Transaction.find();
 
-        if (query.from) find.where("date").gt(query.from);
+        if (query.from) { find.where('date').gt(query.from); }
 
-        if (query.to) find.where("date").lte(query.to);
+        if (query.to) { find.where('date').lte(query.to); }
 
         find
         .sort({ date: 1, splitId: 1 })
@@ -25,8 +26,8 @@ module.exports = function (Transaction) {
     model.create = function (obj, callback) {
         if (!obj.date || !obj.concept || !obj.amount ||
             !obj.person || !obj.account) {
-            return 
-            callback("no date, concept, amount, person or account provided");
+            return callback(
+                'no date, concept, amount, person or account provided');
         }
 
         var t = new Transaction();
@@ -44,16 +45,15 @@ module.exports = function (Transaction) {
     model.update = function (id, obj, callback) {
         if (!id || !obj.date || !obj.concept || 
             !obj.amount || !obj.person || !obj.account) {
-            return 
-            callback(
-                "no id, date, concept, amount, person or account provided");
+            return callback(
+                'no id, date, concept, amount, person or account provided');
         }
 
         Transaction.findByIdAndUpdate(id, obj, callback);
     };
 
     model.delete = function (id, callback) {
-        if (!id) return callback("no id provided");
+        if (!id) { return callback('no id provided'); }
 
         Transaction.findByIdAndRemove(id, callback);
     };

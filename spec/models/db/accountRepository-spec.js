@@ -1,15 +1,17 @@
-var repo = require("../../../models/db/accountRepository");
-var mocks = require("./crudMocks");
+'use strict';
+
+var repo = require('../../../models/db/accountRepository');
+var mocks = require('./crudMocks');
 
 var observer = { callback: function () { } };
 
-describe("get all", function () {
-    it("should call callback with results", function () {
+describe('get all', function () {
+    it('should call callback with results', function () {
         var cMock = mocks.crudMock();
         cMock.err = 1;
         cMock.result = 2;
 
-        spyOn(observer, "callback");
+        spyOn(observer, 'callback');
 
         var db = repo(cMock);
 
@@ -22,15 +24,15 @@ describe("get all", function () {
     });
 });
 
-describe("get one", function () {
-    it("should call callback with result", function () {
+describe('get one', function () {
+    it('should call callback with result', function () {
         var cMock = mocks.crudMock();
         cMock.err = 1;
         cMock.result = 2;
 
-        var id = "id";
+        var id = 'id';
 
-        spyOn(observer, "callback");
+        spyOn(observer, 'callback');
 
         var db = repo(cMock);
 
@@ -43,54 +45,54 @@ describe("get one", function () {
     });
 });
 
-describe("create", function () {
-    it("should call callback with error", function () {
-        var obj = { id: "id", name: "name" };
+describe('create', function () {
+    it('should call callback with error', function () {
+        var obj = { id: 'id', name: 'name' };
 
-        spyOn(observer, "callback");
+        spyOn(observer, 'callback');
 
         var db = repo(mocks.CrudSaveMock);
 
         db.create(obj, observer.callback);
 
         expect(observer.callback)
-        .toHaveBeenCalledWith("err");
+        .toHaveBeenCalledWith('err');
     });
-    it("should send custom error if no id is provided", function () {
-        var obj = { name: "name" }; // note there is no id
+    it('should send custom error if no id is provided', function () {
+        var obj = { name: 'name' }; // note there is no id
 
-        spyOn(observer, "callback");
+        spyOn(observer, 'callback');
 
         var db = repo(mocks.CrudSaveMock);
 
         db.create(obj, observer.callback);
 
         expect(observer.callback)
-        .not.toHaveBeenCalledWith("err");
+        .not.toHaveBeenCalledWith('err');
     });
-    it("should send custom error if no name is provided", function () {
-        var obj = { id: "id" }; // note there is no name
+    it('should send custom error if no name is provided', function () {
+        var obj = { id: 'id' }; // note there is no name
 
-        spyOn(observer, "callback");
+        spyOn(observer, 'callback');
 
         var db = repo(mocks.CrudSaveMock);
 
         db.create(obj, observer.callback);
 
         expect(observer.callback)
-        .not.toHaveBeenCalledWith("err");
+        .not.toHaveBeenCalledWith('err');
     });
 });
 
-describe("update", function () {
-    it("should call callback with result", function () {
+describe('update', function () {
+    it('should call callback with result', function () {
         var cMock = mocks.crudMock();
         cMock.err = 1;
         cMock.result = 2;
 
-        var obj = { id: "id", name: "name" };
+        var obj = { id: 'id', name: 'name' };
 
-        spyOn(observer, "callback");
+        spyOn(observer, 'callback');
 
         var db = repo(cMock);
 
@@ -101,14 +103,14 @@ describe("update", function () {
             cMock.err,
             cMock.result);
     });
-    it("should send custom error if no id is provided", function () {
+    it('should send custom error if no id is provided', function () {
         var cMock = mocks.crudMock();
         cMock.err = 1;
         cMock.result = 2;
 
-        var obj = { name: "name" }; // note there is no id
+        var obj = { name: 'name' }; // note there is no id
 
-        spyOn(observer, "callback");
+        spyOn(observer, 'callback');
 
         var db = repo(cMock);
 
@@ -119,14 +121,14 @@ describe("update", function () {
             cMock.err,
             cMock.result);
     });
-    it("should send custom error if no name is provided", function () {
+    it('should send custom error if no name is provided', function () {
         var cMock = mocks.crudMock();
         cMock.err = 1;
         cMock.result = 2;
 
-        var obj = { id: "id" }; // note there is no name
+        var obj = { id: 'id' }; // note there is no name
 
-        spyOn(observer, "callback");
+        spyOn(observer, 'callback');
 
         var db = repo(cMock);
 
@@ -139,15 +141,15 @@ describe("update", function () {
     });
 });
 
-describe("delete", function () {
-    it("should call callback with result", function () {
+describe('delete', function () {
+    it('should call callback with result', function () {
         var cMock = mocks.crudMock();
         cMock.err = 1;
         cMock.result = 2;
 
-        var id = "id";
+        var id = 'id';
 
-        spyOn(observer, "callback");
+        spyOn(observer, 'callback');
 
         var db = repo(cMock);
 
@@ -158,14 +160,14 @@ describe("delete", function () {
             cMock.err,
             cMock.result);
     });
-    it("should send custom error if no id is provided", function () {
+    it('should send custom error if no id is provided', function () {
         var cMock = mocks.crudMock();
         cMock.err = 1;
         cMock.result = 2;
 
-        var id = "";
+        var id = '';
 
-        spyOn(observer, "callback");
+        spyOn(observer, 'callback');
 
         var db = repo(cMock);
 

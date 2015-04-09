@@ -1,18 +1,20 @@
-var accountRepo = require("../../../models/db/accountRepository");
-var accountModel = require("../../../models/db/accountModel");
-var dbGen = require("../../../models/db/db");
-var dbHelper = require("./dbHelper");
+'use strict';
 
-describe("accountDb", function () {
-    var db = dbGen("mongodb://localhost/sayveettest");
+var accountRepo = require('../../../models/db/accountRepository');
+var accountModel = require('../../../models/db/accountModel');
+var dbGen = require('../../../models/db/db');
+var dbHelper = require('./dbHelper');
+
+describe('accountDb', function () {
+    var db = dbGen('mongodb://localhost/sayveettest');
     dbHelper.startTimeoutForConnection();
     accountModel();
-    var repo = accountRepo(db.model("Account"));
+    var repo = accountRepo(db.model('Account'));
     var emptyStart = false;
 
     function hasEmptyStart(done) {
         if(!emptyStart) {
-            expect("emptyStart failed").toBeFalsy();
+            expect('emptyStart failed').toBeFalsy();
             if(done) {
                 done();
             }
@@ -20,7 +22,7 @@ describe("accountDb", function () {
         return emptyStart;
     }
 
-    it("should get no accounts first", function (done) {
+    it('should get no accounts first', function (done) {
         repo.getAll(function(err, accounts) {
             expect(err).toBeNull();
             expect(accounts.length).toBe(0);
@@ -33,30 +35,30 @@ describe("accountDb", function () {
         });
     });
 
-    it("should add one account", function (done) {
+    it('should add one account', function (done) {
         if(hasEmptyStart(done)) {
-            repo.create({ id: "A", name: "accountA" }, function (err) {
+            repo.create({ id: 'A', name: 'accountA' }, function (err) {
                 expect(err).toBeNull();
                 done();
             });
         }
     });
 
-    it("should get one account", function (done) {
+    it('should get one account', function (done) {
         if(hasEmptyStart(done)) {
             repo.getAll(function (err, accounts) {
                 expect(err).toBeNull();
                 expect(accounts.length).toBe(1);
-                expect(accounts[0].id).toBe("A");
-                expect(accounts[0].name).toBe("accountA");
+                expect(accounts[0].id).toBe('A');
+                expect(accounts[0].name).toBe('accountA');
                 done();
             });
         }
     });
 
-    it("should add another account and get two accounts", function (done) {
+    it('should add another account and get two accounts', function (done) {
         if(hasEmptyStart(done)) {
-            repo.create({ id: "B", name: "accountB" }, function (err) {
+            repo.create({ id: 'B', name: 'accountB' }, function (err) {
                 expect(err).toBeNull();
                 repo.getAll(function (err, accounts) {
                     expect(err).toBeNull();
@@ -67,10 +69,10 @@ describe("accountDb", function () {
         }
     });
 
-    it("should update an account and get the updated value", function (done) {
+    it('should update an account and get the updated value', function (done) {
         if(hasEmptyStart(done)) {
-            var newValue = { id: "B", name: "accountBplus" };
-            repo.update(newValue, function (err, result) {
+            var newValue = { id: 'B', name: 'accountBplus' };
+            repo.update(newValue, function (err) { //}, result) {
                 expect(err).toBeNull();
                 // fails: expect(result.name).toBe(newValue.name);
                 repo.get(newValue.id, function (err, account) {
@@ -82,15 +84,15 @@ describe("accountDb", function () {
         }
     });
 
-    it("should delete accounts", function (done) {
+    it('should delete accounts', function (done) {
         if(hasEmptyStart(done)) {
-            repo.delete("A", function (err, result) {
+            repo.delete('A', function (err, result) {
                 expect(err).toBeNull();
-                expect(result.id).toBe("A");
+                expect(result.id).toBe('A');
 
-                repo.delete("B", function (err, result2) {
+                repo.delete('B', function (err, result2) {
                     expect(err).toBeNull();
-                    expect(result2.id).toBe("B");
+                    expect(result2.id).toBe('B');
 
                     repo.getAll(function (err, accounts) {
                         expect(err).toBeNull();

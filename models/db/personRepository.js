@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = function (Person) {
     var model = {};
 
@@ -14,7 +16,9 @@ module.exports = function (Person) {
     };
 
     model.create = function (obj, callback) {
-        if (!obj.id || !obj.name) return callback("no id or name provided");
+        if (!obj.id || !obj.name) { 
+            return callback('no id or name provided');
+        }
 
         var person = new Person();
         person.id = obj.id;
@@ -26,7 +30,9 @@ module.exports = function (Person) {
     };
 
     model.update = function (obj, callback) {
-        if (!obj.id || !obj.name) return callback("no id or name provided");
+        if (!obj.id || !obj.name) { 
+            return callback('no id or name provided');
+        }
 
         Person.findOneAndUpdate({ id: obj.id }, obj, function (err, person) {
             callback(err, person);
@@ -34,7 +40,9 @@ module.exports = function (Person) {
     };
 
     model.delete = function (id, callback) {
-        if (!id) return callback("no id provided");
+        if (!id) {
+            return callback('no id provided');
+        }
 
         Person.findOneAndRemove({ id: id }, function (err, person) {
             callback(err, person);

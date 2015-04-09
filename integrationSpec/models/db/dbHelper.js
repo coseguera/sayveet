@@ -1,10 +1,12 @@
-var mongoose = require("mongoose");
+'use strict';
+
+var mongoose = require('mongoose');
 var started = false;
 
 exports.startTimeoutForConnection = function () {
-    if (started) return;
+    if (started) { return; }
 
     setTimeout(function () {
         mongoose.disconnect();
     }, 500);
-}
+};

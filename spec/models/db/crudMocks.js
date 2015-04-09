@@ -1,3 +1,5 @@
+'use strict';
+
 exports.crudMock = function () {
     return {
         find: function (callback) {
@@ -7,10 +9,10 @@ exports.crudMock = function () {
             }
             return this;
         },
-        where: function (field) { return this; },
-        sort: function (sortObj) { return this; },
-        gt: function (value) { return this; },
-        lte: function (value) { return this; },
+        where: function () { return this; },
+        sort: function () { return this; },
+        gt: function () { return this; },
+        lte: function () { return this; },
         exec: function(callback) {
             callback(this.err, this.result);
         },
@@ -42,5 +44,5 @@ exports.CrudSaveMock = function () { };
 exports.CrudSaveMock.prototype.save = function (callback) {
     callback(this.err);
 };
-exports.CrudSaveMock.prototype.err = "err";
+exports.CrudSaveMock.prototype.err = 'err';
 
