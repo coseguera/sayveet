@@ -15,9 +15,10 @@ describe('transactionDb', function () {
     var fourDaysAgo = new Date();
     fourDaysAgo.setDate(fourDaysAgo.getDate() - 4);
     var threeDaysAgo = new Date();
-    threeDaysAgo.setDate(threeDaysAgo.getDate() - 4);
+    threeDaysAgo.setDate(threeDaysAgo.getDate() - 3);
 
     var objs = [];
+    var objids = [];
 
     objs.push({ date: fiveDaysAgo, concept: 'transactionA', amount: 10,
               person: 'personA', account: 'accountA'});
@@ -96,8 +97,8 @@ describe('transactionDb', function () {
                     expect(transactions.length).toBe(2);
 
                     // cheat, get ids from result and save them
-                    objs[0].id = transactions[0].id;
-                    objs[1].id = transactions[1].id;
+                    objids.push(transactions[0].id);
+                    objids.push(transactions[1].id);
 
                     done();
                 });
@@ -108,13 +109,11 @@ describe('transactionDb', function () {
     it('should update an transaction and get the updated value', function (done) {
         if(hasEmptyStart(done)) {
             objs[1].concept = 'transactionBplus';
-            var objCopy = JSON.parse(JSON.stringify(objs[1]));
-            delete objCopy.id;
             
-            repo.update(objs[1].id, objCopy, function (err) { //}, result) {
+            repo.update(objids[1], objs[1], function (err) { //}, result) {
                 expect(err).toBeNull();
                 // fails: expect(result.name).toBe(newValue.name);
-                repo.get(objs[1].id, function (err, transaction) {
+                repo.get(objids[1], function (err, transaction) {
                     expect(err).toBeNull();
                     expectCompare(transaction, objs[1]);
                     done();
@@ -125,13 +124,13 @@ describe('transactionDb', function () {
 
     it('should delete transactions', function (done) {
         if(hasEmptyStart(done)) {
-            repo.delete(objs[0].id, function (err, result) {
+            repo.delete(objids[0], function (err, result) {
                 expect(err).toBeNull();
-                expect(result.id).toBe(objs[0].id);
+                expect(result.id).toBe(objids[0]);
 
-                repo.delete(objs[1].id, function (err, result2) {
+                repo.delete(objids[1], function (err, result2) {
                     expect(err).toBeNull();
-                    expect(result2.id).toBe(objs[1].id);
+                    expect(result2.id).toBe(objids[1]);
 
                     repo.getAll(function (err, transactions) {
                         expect(err).toBeNull();
