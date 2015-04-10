@@ -1,16 +1,23 @@
 'use strict';
 
+var mongoose = require('mongoose');
 var personRepo = require('../../../models/db/personRepository');
 var personModel = require('../../../models/db/personModel');
-var dbGen = require('../../../models/db/db');
-var dbHelper = require('./dbHelper');
 
 describe('personDb', function () {
-    var db = dbGen('mongodb://localhost/sayveettest');
-    dbHelper.startTimeoutForConnection();
-    personModel();
-    var repo = personRepo(db.model('Person'));
+    var db;
+    var repo;
     var emptyStart = false;
+    personModel();
+
+    beforeEach(function () {
+        db = mongoose.createConnection('mongodb://localhost/sayveettest');
+        repo = personRepo(db.model('Person'));
+    });
+
+    afterEach(function () {
+        mongoose.disconnect();
+    });
 
     function hasEmptyStart(done) {
         if(!emptyStart) {
