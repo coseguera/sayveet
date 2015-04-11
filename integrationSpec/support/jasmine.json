@@ -1,0 +1,9 @@
+{
+  "spec_dir": "integrationSpec",
+  "spec_files": [
+    "**/*[sS]pec.js"
+  ],
+  "helpers": [
+    "helpers/**/*.js"
+  ]
+}

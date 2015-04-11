@@ -86,7 +86,8 @@ describe('transactionDb wrapper', function () {
             }
         });
     
-        it('should add another transaction and get two transactions', function (done) {
+        it('should add another transaction and get two transactions', 
+           function (done) {
             if(hasEmptyStart(done)) {
                 repo.create(objs[1], function (err) {
                     expect(err).toBeNull();
@@ -104,7 +105,8 @@ describe('transactionDb wrapper', function () {
             }
         });
     
-        it('should update an transaction and get the updated value', function (done) {
+        it('should update an transaction and get the updated value', 
+           function (done) {
             if(hasEmptyStart(done)) {
                 objs[1].concept = 'transactionBplus';
                 
