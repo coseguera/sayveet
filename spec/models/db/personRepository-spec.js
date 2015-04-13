@@ -1,7 +1,7 @@
 'use strict';
 
 var repo = require('../../../models/db/personRepository');
-var mocks = require('./crudMocks');
+var mocks = require('./../../mocks/crudMocks');
 
 var observer = { callback: function () { } };
 
