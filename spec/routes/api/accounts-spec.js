@@ -1,37 +1,9 @@
 'use strict';
 
 var routes = require('../../../routes/api/accounts');
-
-var repositoryMock = function () {
-    return {
-        getAll: function (callback) {
-            callback(this.err, this.result);
-        },
-        get: function (id, callback) {
-            callback(this.err, this.result);
-        },
-        create: function (obj, callback) {
-            callback(this.err);
-        },
-        update: function (obj, callback) {
-            callback(this.err, this.result);
-        },
-        delete: function (id, callback) {
-            callback(this.err, this.result);
-        }
-    };
-};
-
-var loggerMock = {
-    error: function () { }
-};
-
-var responseMock = function () {
-    return {
-        sendStatus: function () { },
-        json: function () { }
-    };
-};
+var repositoryMock = require('../../mocks/repositoryMock');
+var loggerMock = require('../../mocks/loggerMock');
+var responseMock = require('../../mocks/responseMock');
 
 describe('account routes', function () {
     var resMock;
