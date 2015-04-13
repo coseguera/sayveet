@@ -1,0 +1,147 @@
+'use strict';
+
+var routes = require('../../../routes/api/accounts');
+
+var repositoryMock = function () {
+    return {
+        getAll: function (callback) {
+            callback(this.err, this.result);
+        },
+        get: function (id, callback) {
+            callback(this.err, this.result);
+        },
+        create: function (obj, callback) {
+            callback(this.err);
+        }
+    };
+};
+
+var loggerMock = {
+    error: function () { }
+};
+
+var responseMock = function () {
+    return {
+        sendStatus: function () { },
+        json: function () { }
+    };
+};
+
+describe('account routes', function () {
+    var resMock;
+
+    beforeEach(function () {
+        resMock = responseMock();
+        spyOn(resMock, 'sendStatus');
+        spyOn(resMock, 'json');
+    });
+
+    describe('index METHOD: GET', function () {
+        it('returns all accounts from repo', function () {
+            var repoMock = repositoryMock();
+            repoMock.err = 0;
+            repoMock.result = 2;
+
+            var obj = routes(repoMock, loggerMock);
+
+            obj['/'].get({}, resMock);
+
+            expect(resMock.json).toHaveBeenCalledWith(repoMock.result);
+        });
+
+        it('returns 500 if there is an error', function () {
+            var repoMock = repositoryMock();
+            repoMock.err = 1;
+
+            var obj = routes(repoMock, loggerMock);
+
+            obj['/'].get({}, resMock);
+
+            expect(resMock.sendStatus).toHaveBeenCalledWith(500);
+            expect(resMock.json).not.toHaveBeenCalled();
+        });
+    });
+
+    describe('index METHOD: POST', function () {
+        it('creates an account', function () {
+            var repoMock = repositoryMock();
+            repoMock.err = 0;
+
+            var reqMock = {
+                body: { id: 'id', name: 'name' }
+            };
+
+            var obj = routes(repoMock, loggerMock);
+
+            obj['/'].post(reqMock, resMock);
+
+            expect(resMock.sendStatus).toHaveBeenCalledWith(200);
+        });
+
+        it('returns 500 if there is an error', function () {
+            var repoMock = repositoryMock();
+            repoMock.err = 1;
+
+            var reqMock = {
+                body: { id: 'id', name: 'name' }
+            };
+
+            var obj = routes(repoMock, loggerMock);
+
+            obj['/'].post(reqMock, resMock);
+
+            expect(resMock.sendStatus).toHaveBeenCalledWith(500);
+        });
+    });
+
+    describe(':id METHOD: GET', function () {
+        it('returns account from repo', function () {
+            var repoMock = repositoryMock();
+            repoMock.err = 0;
+            repoMock.result = 2;
+
+            var reqMock = {
+                params: { id: 'id' }
+            };
+
+            var obj = routes(repoMock, loggerMock);
+
+            obj['/:id'].get(reqMock, resMock, {}, 'id');
+
+            expect(resMock.json).toHaveBeenCalledWith(repoMock.result);
+        });
+
+        it('returns 500 if there is an error', function () {
+            var repoMock = repositoryMock();
+            repoMock.err = 1;
+
+            var reqMock = {
+                params: { id: 'id' }
+            };
+
+            var obj = routes(repoMock, loggerMock);
+
+            obj['/:id'].get(reqMock, resMock, {}, 'id');
+
+            expect(resMock.sendStatus).toHaveBeenCalledWith(500);
+            expect(resMock.json).not.toHaveBeenCalled();
+        });
+ 
+        it('returns 404 if id is not present', function () {
+            var repoMock = repositoryMock();
+            repoMock.err = 0;
+            repoMock.result = 0;
+
+            var reqMock = {
+                params: { id: 'id' }
+            };
+
+            var obj = routes(repoMock, loggerMock);
+
+            obj['/:id'].get(reqMock, resMock, {}, 'id');
+
+            expect(resMock.sendStatus).toHaveBeenCalledWith(404);
+            expect(resMock.json).not.toHaveBeenCalled();
+        });
+    });
+});
