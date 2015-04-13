@@ -46,7 +46,47 @@ module.exports = function (repo, logger) {
                         res.sendStatus(404);
                         return;
                     }
+
                     res.json(result);
+                });
+            },
+            put: function (req, res) {
+                var obj = {
+                    id: req.params.id,
+                    name: req.body.name
+                };
+
+                repo.update(obj, function (err, result) {
+                    if (err) {
+                        logger.error(err);
+                        res.sendStatus(500);
+                        return;
+                    }
+
+                    if (!result) {
+                        res.sendStatus(404);
+                        return;
+                    }
+
+                    res.sendStatus(200);
+                });
+            },
+            delete: function (req, res) {
+                var id = req.params.id;
+
+                repo.delete(id, function (err, result) {
+                    if (err) {
+                        logger.error(err);
+                        res.sendStatus(500);
+                        return;
+                    }
+
+                    if (!result) {
+                        res.sendStatus(404);
+                        return;
+                    }
+
+                    res.sendStatus(200);
                 });
             }
         }

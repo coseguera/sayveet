@@ -12,6 +12,12 @@ var repositoryMock = function () {
         },
         create: function (obj, callback) {
             callback(this.err);
+        },
+        update: function (obj, callback) {
+            callback(this.err, this.result);
+        },
+        delete: function (id, callback) {
+            callback(this.err, this.result);
         }
     };
 };
@@ -106,7 +112,7 @@ describe('account routes', function () {
 
             var obj = routes(repoMock, loggerMock);
 
-            obj['/:id'].get(reqMock, resMock, {}, 'id');
+            obj['/:id'].get(reqMock, resMock);
 
             expect(resMock.json).toHaveBeenCalledWith(repoMock.result);
         });
@@ -121,7 +127,7 @@ describe('account routes', function () {
 
             var obj = routes(repoMock, loggerMock);
 
-            obj['/:id'].get(reqMock, resMock, {}, 'id');
+            obj['/:id'].get(reqMock, resMock);
 
             expect(resMock.sendStatus).toHaveBeenCalledWith(500);
             expect(resMock.json).not.toHaveBeenCalled();
@@ -138,10 +144,111 @@ describe('account routes', function () {
 
             var obj = routes(repoMock, loggerMock);
 
-            obj['/:id'].get(reqMock, resMock, {}, 'id');
+            obj['/:id'].get(reqMock, resMock);
 
             expect(resMock.sendStatus).toHaveBeenCalledWith(404);
             expect(resMock.json).not.toHaveBeenCalled();
+        });
+    });
+
+    describe(':id METHOD PUT', function () {
+        it('updates an account in repo', function () {
+            var repoMock = repositoryMock();
+            repoMock.err = 0;
+            repoMock.result = 1;
+
+            var reqMock = {
+                params: { id: 'id' },
+                body: { name: 'name' }
+            };
+
+            var obj = routes(repoMock, loggerMock);
+
+            obj['/:id'].put(reqMock, resMock);
+
+            expect(resMock.sendStatus).toHaveBeenCalledWith(200);        
+        });
+
+        it('returns 500 if there is an error', function () {
+            var repoMock = repositoryMock();
+            repoMock.err = 1;
+
+            var reqMock = {
+                params: { id: 'id' },
+                body: { name: 'name' }
+            };
+
+            var obj = routes(repoMock, loggerMock);
+
+            obj['/:id'].put(reqMock, resMock);
+
+            expect(resMock.sendStatus).toHaveBeenCalledWith(500);
+        });
+ 
+        it('returns 404 if account doesnt exist', function () {
+            var repoMock = repositoryMock();
+            repoMock.err = 0;
+            repoMock.result = 0;
+
+            var reqMock = {
+                params: { id: 'id' },
+                body: { name: 'name' }
+            };
+
+            var obj = routes(repoMock, loggerMock);
+
+            obj['/:id'].put(reqMock, resMock);
+
+            expect(resMock.sendStatus).toHaveBeenCalledWith(404);
+        });
+   });
+
+    describe(':id METHOD DELETE', function () {
+        it('deletes an account in repo', function () {
+            var repoMock = repositoryMock();
+            repoMock.err = 0;
+            repoMock.result = 1;
+
+            var reqMock = {
+                params: { id: 'id' }
+            };
+
+            var obj = routes(repoMock, loggerMock);
+
+            obj['/:id'].delete(reqMock, resMock);
+
+            expect(resMock.sendStatus).toHaveBeenCalledWith(200);        
+        });
+
+        it('returns 500 if there is an error', function () {
+            var repoMock = repositoryMock();
+            repoMock.err = 1;
+
+            var reqMock = {
+                params: { id: 'id' }
+            };
+
+            var obj = routes(repoMock, loggerMock);
+
+            obj['/:id'].delete(reqMock, resMock);
+
+            expect(resMock.sendStatus).toHaveBeenCalledWith(500);
+        });
+ 
+        it('returns 404 if account doesnt exist', function () {
+            var repoMock = repositoryMock();
+            repoMock.err = 0;
+            repoMock.result = 0;
+
+            var reqMock = {
+                params: { id: 'id' }
+            };
+
+            var obj = routes(repoMock, loggerMock);
+
+            obj['/:id'].delete(reqMock, resMock);
+
+            expect(resMock.sendStatus).toHaveBeenCalledWith(404);
         });
     });
 });
