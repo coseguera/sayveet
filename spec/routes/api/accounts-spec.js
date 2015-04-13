@@ -70,6 +70,36 @@ describe('account routes', function () {
 
             expect(resMock.sendStatus).toHaveBeenCalledWith(500);
         });
+
+        it('returns 400 if no id is provided', function () {
+            var repoMock = repositoryMock();
+            repoMock.err = 1;
+
+            var reqMock = { // note there is no id
+                body: { name: 'name' }
+            };
+
+            var obj = routes(repoMock, loggerMock);
+
+            obj['/'].post(reqMock, resMock);
+
+            expect(resMock.sendStatus).toHaveBeenCalledWith(400);
+        });
+
+        it('returns 400 if no name is provided', function () {
+            var repoMock = repositoryMock();
+            repoMock.err = 1;
+
+            var reqMock = { // note there is no name
+                body: { id: 'id' }
+            };
+
+            var obj = routes(repoMock, loggerMock);
+
+            obj['/'].post(reqMock, resMock);
+
+            expect(resMock.sendStatus).toHaveBeenCalledWith(400);
+        });
     });
 
     describe(':id METHOD: GET', function () {
@@ -172,6 +202,23 @@ describe('account routes', function () {
             obj['/:id'].put(reqMock, resMock);
 
             expect(resMock.sendStatus).toHaveBeenCalledWith(404);
+        });
+ 
+        it('returns 400 if no name is provided', function () {
+            var repoMock = repositoryMock();
+            repoMock.err = 0;
+            repoMock.result = 1;
+
+            var reqMock = { // note there is no name
+                params: { id: 'id' },
+                body: { }
+            };
+
+            var obj = routes(repoMock, loggerMock);
+
+            obj['/:id'].put(reqMock, resMock);
+
+            expect(resMock.sendStatus).toHaveBeenCalledWith(400);
         });
    });
 

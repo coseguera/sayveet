@@ -20,6 +20,11 @@ module.exports = function (repo, logger) {
                     name: req.body.name
                 };
 
+                if (!obj.id || !obj.name) {
+                    res.sendStatus(400);
+                    return;
+                }
+
                 repo.create(obj, function (err) {
                     if (err) {
                         logger.error(err);
@@ -55,6 +60,11 @@ module.exports = function (repo, logger) {
                     id: req.params.id,
                     name: req.body.name
                 };
+
+                if (!obj.name) {
+                    res.sendStatus(400);
+                    return;
+                }
 
                 repo.update(obj, function (err, result) {
                     if (err) {
