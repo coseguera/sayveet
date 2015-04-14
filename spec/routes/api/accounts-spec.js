@@ -236,7 +236,7 @@ describe('account routes', function () {
 
             obj['/:id'].delete(reqMock, resMock);
 
-            expect(resMock.sendStatus).toHaveBeenCalledWith(200);        
+            expect(resMock.sendStatus).toHaveBeenCalledWith(200);
         });
 
         it('returns 500 if there is an error', function () {

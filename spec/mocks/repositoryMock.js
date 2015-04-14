@@ -8,6 +8,9 @@ module.exports = function () {
         get: function (id, callback) {
             callback(this.err, this.result);
         },
+        query: function (query, callback) {
+            callback(this.err, this.result);
+        },
         create: function (obj, callback) {
             callback(this.err);
         },
