@@ -1,6 +1,6 @@
 'use strict';
 
-var routes = require('../../../routes/api/accounts');
+var routes = require('../../../routes/api/account');
 var repositoryMock = require('../../mocks/repositoryMock');
 var loggerMock = require('../../mocks/loggerMock');
 var responseMock = require('../../mocks/responseMock');
