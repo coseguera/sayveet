@@ -18,6 +18,18 @@ module.exports = function (Transaction) {
 
         if (query.to) { find.where('date').lte(query.to); }
 
+        if (query.date) { find.where('date').equals(query.date); }
+
+        if (query.concept) { find.where('concept').equals(query.concept); }
+
+        if (query.amount) { find.where('amount').equals(query.amount); }
+
+        if (query.person) { find.where('person').equals(query.person); }
+
+        if (query.account) { find.where('account').equals(query.account); }
+
+        if (query.splitId) { find.where('splitId').equals(query.splitId); }
+
         find
         .sort({ date: 1, splitId: 1 })
         .exec(callback);
