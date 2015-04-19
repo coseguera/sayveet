@@ -35,12 +35,10 @@ function processLine (line) {
             date: new Date(parts[0]),
             concept: parts[1],
             amount: parts[2],
-            person: parts[4],//[3],
-            account: parts[3],//[4],
+            account: parts[3],
+            person: parts[4],
             splitId: parts[5]
         };
-
-    //console.log(JSON.stringify(obj));
 
     if (isNaN(obj.date.getTime()) || isNaN(obj.amount)) {
         console.error('not a valid value!');
@@ -56,7 +54,6 @@ function processLine (line) {
         lineCnt--;
 
         if (result.length > 0) {
-            //console.error(JSON.stringify(result) + ' already exists');
             process.stdout.write('x');
 
             if (!lineCnt) {
@@ -70,7 +67,6 @@ function processLine (line) {
             if (createErr) {
                 console.error(createErr);
             } else {
-                //console.log('created: ' + JSON.stringify(obj));
                 process.stdout.write('.');
             }
 

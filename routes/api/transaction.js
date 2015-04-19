@@ -24,8 +24,8 @@ module.exports = function (repo, logger) {
                     date: new Date(req.body.date),
                     concept: req.body.concept,
                     amount: req.body.amount,
-                    person: req.body.person,
-                    account: req.body.account
+                    account: req.body.account,
+                    person: req.body.person
                 };
 
                 if (!req.body.date ||
@@ -33,10 +33,14 @@ module.exports = function (repo, logger) {
                     !obj.concept || 
                     !obj.amount || 
                     isNaN(obj.amount) ||
-                    !obj.person || 
-                    !obj.account) {
+                    !obj.account || 
+                    !obj.person) {
                     res.sendStatus(400);
                     return;
+                }
+
+                if(req.body.splitId) {
+                    obj.splitId = req.body.splitId;
                 }
 
                 repo.create(obj, function (err) {
@@ -76,8 +80,8 @@ module.exports = function (repo, logger) {
                     date: new Date(req.body.date),
                     concept: req.body.concept,
                     amount: req.body.amount,
-                    person: req.body.person,
-                    account: req.body.account
+                    account: req.body.account,
+                    person: req.body.person
                 };
 
                 if (!req.body.date ||
@@ -85,8 +89,8 @@ module.exports = function (repo, logger) {
                     !obj.concept ||
                     !obj.amount ||
                     isNaN(obj.amount) ||
-                    !obj.person ||
-                    !obj.account) {
+                    !obj.account ||
+                    !obj.person) {
                     res.sendStatus(400);
                     return;
                 }

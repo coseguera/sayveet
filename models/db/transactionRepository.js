@@ -24,9 +24,9 @@ module.exports = function (Transaction) {
 
         if (query.amount) { find.where('amount').equals(query.amount); }
 
-        if (query.person) { find.where('person').equals(query.person); }
-
         if (query.account) { find.where('account').equals(query.account); }
+
+        if (query.person) { find.where('person').equals(query.person); }
 
         if (query.splitId) { find.where('splitId').equals(query.splitId); }
 
@@ -37,9 +37,9 @@ module.exports = function (Transaction) {
 
     model.create = function (obj, callback) {
         if (!obj.date || !obj.concept || !obj.amount ||
-            !obj.person || !obj.account) {
+            !obj.account || !obj.person) {
             return callback(
-                'no date, concept, amount, person or account provided');
+                'no date, concept, amount, account or person provided');
         }
 
         var t = new Transaction();
@@ -56,9 +56,9 @@ module.exports = function (Transaction) {
 
     model.update = function (id, obj, callback) {
         if (!id || !obj.date || !obj.concept || 
-            !obj.amount || !obj.person || !obj.account) {
+            !obj.amount || !obj.account || !obj.person) {
             return callback(
-                'no id, date, concept, amount, person or account provided');
+                'no id, date, concept, amount, account or person provided');
         }
 
         Transaction.findByIdAndUpdate(id, obj, callback);
