@@ -19,14 +19,16 @@ module.exports = function (args) {
             case '--file':
                 i++;
                 var path = args[i];
-                if (fs.existsSync(path)) {
+                if (fs.existsSync(path) && fs.lstatSync(path).isFile()) {
                     result.fileName = path;
                 }
                 break;
         }
     }
 
-    result.valid = result.mongoInstance && result.dbName && result.fileName;
+    result.valid = !!result.mongoInstance && 
+        !!result.dbName && 
+        !!result.fileName;
 
     return result;
 };
