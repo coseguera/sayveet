@@ -1,10 +1,16 @@
 'use strict';
 
-var mongoose = require('mongoose');
-var db = mongoose.createConnection('mongodb://localhost/ispentit');
-var repoFn = require('./../models/db/accountRepository');
-var modelFn = require('./../models/db/accountModel');
+var mongoose = require('mongoose'),
+    repoFn = require('./../models/db/accountRepository'),
+    modelFn = require('./../models/db/accountModel'),
+    argsFn = require('./helpers/outArgs'),
+    argvs = process.argv.slice(2);
 
+var args = argsFn(argvs);
+
+if (!args.valid) { return; }
+
+var db = mongoose.createConnection(args.mongoInstance + args.dbName);
 modelFn();
 var repo = repoFn(db.model('Account'));
 

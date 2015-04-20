@@ -1,6 +1,5 @@
 'use strict';
 
-var fs = require('fs');
 module.exports = function (args) {
     var result = {
         mongoInstance: 'mongodb://localhost/'
@@ -16,25 +15,19 @@ module.exports = function (args) {
                 i++;
                 result.mongoInstance = args[i];
                 break;
-            case '--file':
-                i++;
-                var path = args[i];
-                if (fs.existsSync(path) && fs.lstatSync(path).isFile()) {
-                    result.fileName = path;
-                }
+            case '--round':
+                result.round = true;
                 break;
         }
     }
 
-    result.valid = !!result.mongoInstance && 
-        !!result.dbName && 
-        !!result.fileName;
+    result.valid = !!result.mongoInstance &&
+        !!result.dbName;
 
     if (!result.valid) {
         process.stderr.write('usage: node programName --db databaseName ');
-        process.stderr.write('[--instance instanceName] --file pathToFile\n');
-        process.stderr.write('example: node accountIn.js --db sayveet --file ');
-        process.stdout.write('/Users/coseguera/Documents/ispentit_backup/accounts.txt\n');
+        process.stderr.write('[--instance instanceName] [--round]\n');
+        process.stderr.write('example: node accountOut.js --db sayveet --round\n');
     }
 
     return result;

@@ -1,35 +1,26 @@
 'use strict';
 
-var fs = require('fs'),
-    liner = require('./helpers/liner'),
-    mongoose = require('mongoose'),
+var mongoose = require('mongoose'),
     repoFn = require('./../models/db/transactionRepository'),
     modelFn = require('./../models/db/transactionModel'),
     argsFn = require('./helpers/inArgs'),
+    inFn = require('./helpers/in'),
     argvs = process.argv.slice(2);
 
-var args = argsFn(argvs),
-    lineCnt = 0;
+var args = argsFn(argvs);
 
-if (args.valid) {
-    var db = mongoose.createConnection(args.mongoInstance + args.dbName);
-    modelFn();
-    var repo = repoFn(db.model('Transaction'));
+if (!args.valid) { return; }
 
-    var source = fs.createReadStream(args.fileName);
-    source.pipe(liner);
-    liner.on('readable', function () {
-        var line;
-        while ((line = liner.read())) {
-            lineCnt++;
-            processLine(line);
-        }
-    });
-} else {
-    console.error('There is an error');
-}
+var db = mongoose.createConnection(args.mongoInstance + args.dbName);
+modelFn();
+var repo = repoFn(db.model('Transaction'));
 
-function processLine (line) {
+inFn(args.fileName, processLine, function () {
+    process.stdout.write('\n');
+    mongoose.disconnect();
+});
+
+function processLine (line, callback) {
     var parts = line.split(','),
         obj = {
             date: new Date(parts[0]),
@@ -42,25 +33,18 @@ function processLine (line) {
 
     if (isNaN(obj.date.getTime()) || isNaN(obj.amount)) {
         console.error('not a valid value!');
-        return;
+        return callback();
     }
 
     repo.query(obj, function (err, result) {
         if (err) {
             console.error(err);
-            return;
+            return callback(err);
         }
-
-        lineCnt--;
 
         if (result.length > 0) {
             process.stdout.write('x');
-
-            if (!lineCnt) {
-                mongoose.disconnect();
-            }
-
-            return;
+            return callback(err);
         }
 
         repo.create(obj, function (createErr) {
@@ -69,10 +53,7 @@ function processLine (line) {
             } else {
                 process.stdout.write('.');
             }
-
-            if (!lineCnt) {
-                mongoose.disconnect();
-            }
+            callback(createErr);
         });
     });
 }
