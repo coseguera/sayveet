@@ -7,7 +7,7 @@ liner._transform = function (chunk, encoding, done) {
      var data = chunk.toString();
      if (this._lastLineData) { data = this._lastLineData + data; }
  
-     var lines = data.split('\n');
+     var lines = data.split(/\r?\n/);
      this._lastLineData = lines.splice(lines.length - 1,1)[0];
  
      lines.forEach(this.push.bind(this));

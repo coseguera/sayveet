@@ -23,16 +23,28 @@ module.exports = function (args) {
                     result.fileName = path;
                 }
                 break;
+            case '--amountin':
+                i++;
+                var amountin = args[i];
+                if (amountin === 'dollars' || amountin === 'cents') {
+                    result.amountin = amountin;
+                }
+                break;
+            case '--test':
+                result.test = true;
+                break;
         }
     }
 
     result.valid = !!result.mongoInstance && 
         !!result.dbName && 
-        !!result.fileName;
+        !!result.fileName &&
+        !!result.amountin;
 
     if (!result.valid) {
         process.stderr.write('usage: node programName --db databaseName ');
-        process.stderr.write('[--instance instanceName] --file pathToFile\n');
+        process.stderr.write('[--instance instanceName] --file pathToFile ');
+        process.stderr.write('--amountin dollars|cents [--test]\n');
         process.stderr.write('example: node accountIn.js --db sayveet --file ');
         process.stdout.write('/Users/coseguera/Documents/ispentit_backup/accounts.txt\n');
     }

@@ -25,14 +25,23 @@ function processLine (line, callback) {
         obj = {
             date: new Date(parts[0]),
             concept: parts[1],
-            amount: parts[2],
+            amount: args.amountin === 'dollars' ? 
+                Math.round(parts[2] * 100) : parts[2],
             account: parts[3],
-            person: parts[4],
-            splitId: parts[5]
+            person: parts[4]
         };
+
+    if (parts[5]) {
+        obj.splitId = parts[5];
+    }
 
     if (isNaN(obj.date.getTime()) || isNaN(obj.amount)) {
         console.error('not a valid value!');
+        return callback();
+    }
+
+    if (args.test) {
+        console.log(JSON.stringify(obj));
         return callback();
     }
 
