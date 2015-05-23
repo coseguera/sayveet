@@ -1,4 +1,6 @@
 /// <reference path="typings/node/node.d.ts"/>
+/// <reference path="typings/express/express.d.ts" />
+
 'use strict';
 
 var express = require('express');
