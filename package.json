@@ -16,6 +16,7 @@
     "mongoose": "*"
   },
   "devDependencies": {
-    "gulp": "^3.8.11"
+    "gulp": "^3.8.11",
+    "gulp-jshint": "^1.11.0"
   }
 }
