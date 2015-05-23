@@ -31,3 +31,6 @@ npm-debug.log
 
 # bower directory
 bower_components
+
+# vscode typings directory
+typings
