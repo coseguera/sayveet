@@ -5,5 +5,11 @@
     "args": [
         "--no-color"
     ],
-    "tasks": []
+    "tasks": [
+        {
+            "taskName": "default",
+            "isBuildCommand": true,
+            "showOutput": "always"
+        }
+    ]
 }
