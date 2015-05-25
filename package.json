@@ -17,6 +17,7 @@
   },
   "devDependencies": {
     "gulp": "^3.8.11",
+    "gulp-jasmine": "^2.0.1",
     "gulp-jshint": "^1.11.0",
     "tsd": "^0.6.0"
   }

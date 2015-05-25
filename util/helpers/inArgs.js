@@ -1,3 +1,4 @@
+/// <reference path="../../typings/node/node.d.ts"/>
 'use strict';
 
 var fs = require('fs');
@@ -30,6 +31,9 @@ module.exports = function (args) {
                     result.amountin = amountin;
                 }
                 break;
+            case '--silent':
+                result.silent = true;
+                break;
             case '--test':
                 result.test = true;
                 break;
@@ -41,12 +45,12 @@ module.exports = function (args) {
         !!result.fileName &&
         !!result.amountin;
 
-    if (!result.valid) {
+    if (!result.valid && !result.silent) {
         process.stderr.write('usage: node programName --db databaseName ');
         process.stderr.write('[--instance instanceName] --file pathToFile ');
-        process.stderr.write('--amountin dollars|cents [--test]\n');
-        process.stderr.write('example: node accountIn.js --db sayveet --file ');
-        process.stdout.write('/Users/coseguera/Documents/ispentit_backup/accounts.txt\n');
+        process.stderr.write('--amountin dollars|cents [--silent] [--test]\n');
+        process.stderr.write('example: node accountIn.js --db sayveet --amountin dollars ');
+        process.stdout.write('--file /Users/coseguera/Documents/ispentit_backup/accounts.txt\n');
     }
 
     return result;

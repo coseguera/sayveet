@@ -9,7 +9,13 @@
         {
             "taskName": "default",
             "isBuildCommand": true,
-            "showOutput": "always"
+            "showOutput": "always",
+            "problemMatcher": "$jshint"
+        },
+        {
+            "taskName": "test",
+            "isTestCommand": true,
+            "showOutput": "silent"
         }
     ]
 }
