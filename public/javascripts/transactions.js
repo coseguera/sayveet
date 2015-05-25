@@ -5,6 +5,9 @@
 'use strict';
 
 var $form = $('#query'),
+    $from = $('#from'),
+    $by = $('#by'),
+    $on = $('#on'),
     url = '/api/transaction',
     peopleUrl = '/api/person',
     accountsUrl = '/api/account';
@@ -50,39 +53,57 @@ function AppViewModel() {
     self.transactions = ko.observableArray();
     self.people = ko.observableArray();
     self.accounts = ko.observableArray();
+    self.by = '';
+    self.on = '';
     
     // Transaction related
     self.processTransactions = function (data) {
-        self.transactions($.map(data, function (item) {
-            return new Transaction(item, self);
-        }));
+        $.getJSON(url, 'aggregates=true&from=' + $from.val(), function (aggregateData) {
+            self.processPersonSummaries(aggregateData.personSummaries);
+            self.processAccountSummaries(aggregateData.accountSummaries);
+            
+            self.transactions($.map(data, function (item) {
+                self.addToPersonSummaries(item.person, item.amount);
+                item.personSummary = self.getPersonSummaries(item.person);
+                self.addToAccountSummaries(item.account, item.amount);
+                item.accountSummary = self.getAccountSummaries(item.account);
+                
+                if((!self.by || self.by === item.person) && 
+                    (!self.on || self.on === item.account)) {
+                    return new Transaction(item, self);
+                }
+                return;
+            }));
+        });
     };
-//    self.processTransactions = function(data) {
-//        self.processPeopleSummaries(data.personSummaries);
-//        self.processAccountSummaries(data.accountSummaries);
-//        self.by = data.by ? data.by : null;
-//        self.on = data.on ? data.on : null;
-//
-//        self.transactions($.map(data.items, function(item) { 
-//            self.addToPeopleSummaries(item.person, item.amount);
-//            item.personSummary = self.getPeopleSummaries(item.person);
-//            self.addToAccountSummaries(item.account, item.amount);
-//            item.accountSummary = self.getAccountSummaries(item.account);
-//
-//            if((!self.by || self.by === item.person) && (!self.on || self.on === item.account)) {
-//                return new Transaction(item, self);
-//            }
-//
-//            return;
-//        }));
-//    };
     self.queryTransactions = function() {
         var query = $form.serialize();
+        self.by = $by.val();
+        self.on = $on.val();
         $.getJSON(url, query, self.processTransactions);
     };
     self.queryTransactions();    
     
-    // People related 
+    // People related
+    self.processPersonSummaries = function (summaries) {
+        self.personSummaries = {};
+        if (summaries) {
+            for (var i = 0, len = summaries.length; i < len; i++) {
+                var summary = summaries[i];
+                self.personSummaries[summary._id] = summary.value;
+            }
+        }
+    };
+    self.addToPersonSummaries = function (person, value) {
+        if (!self.personSummaries[person]) {
+            self.personSummaries[person] = value;
+        } else {
+            self.personSummaries[person] += value;
+        }
+    };
+    self.getPersonSummaries = function (person) {
+        return self.personSummaries[person] ? self.personSummaries[person] : 0;
+    };
     self.getPersonName = function(id) {
         return getName(id, self.people());
     };
@@ -92,6 +113,25 @@ function AppViewModel() {
     self.queryPeople();
     
     // Accounts related
+    self.processAccountSummaries = function (summaries) {
+        self.accountSummaries = {};
+        if (summaries) {
+            for (var i = 0, len = summaries.length; i < len; i++) {
+                var summary = summaries[i];
+                self.accountSummaries[summary._id] = summary.value;
+            }
+        }
+    };
+    self.addToAccountSummaries = function (account, value) {
+        if (!self.accountSummaries[account]) {
+            self.accountSummaries[account] = value;
+        } else {
+            self.accountSummaries[account] += value;
+        }
+    };
+    self.getAccountSummaries = function (account) {
+        return self.accountSummaries[account] ? self.accountSummaries[account] : 0;
+    };
     self.getAccountName = function(id) {
         return getName(id, self.accounts());
     };
@@ -108,51 +148,6 @@ function AppViewModel() {
         return undefined;
     }
 }
-
-//function AppViewModel() {
-//    self.peopleSummaries;
-//    self.accountSummaries;
-//    self.by;
-//    self.on;
-
-//    // personRelated
-//    self.processPeopleSummaries = function(summaries) {
-//        self.peopleSummaries = {};
-//        for(var i = 0, len = summaries.length; i < len; i++) {
-//            var summary = summaries[i];
-//            self.peopleSummaries[summary._id] = summary.value;
-//        }
-//    };
-//    self.addToPeopleSummaries = function(person, value) {
-//        if(!self.peopleSummaries[person]) {
-//            self.peopleSummaries[person] = value;
-//        } else {
-//            self.peopleSummaries[person] += value;
-//        }
-//    };
-//    self.getPeopleSummaries = function(person) {
-//        return self.peopleSummaries[person] ? self.peopleSummaries[person] : 0;
-//    };
-
-//    // account related
-//    self.processAccountSummaries = function(summaries) {
-//        self.accountSummaries = {};
-//        for(var i = 0, len = summaries.length; i < len; i++) {
-//            var summary = summaries[i];
-//            self.accountSummaries[summary._id] = summary.value;
-//        }
-//    };
-//    self.addToAccountSummaries = function(account, value) {
-//        if(!self.accountSummaries[account]) {
-//            self.accountSummaries[account] = value;
-//        } else {
-//            self.accountSummaries[account] += value;
-//        }
-//    };
-//    self.getAccountSummaries = function(account) {
-//        return self.accountSummaries[account] ? self.accountSummaries[account] : 0;
-//    };
-//}
 
 var vm = new AppViewModel();
 ko.applyBindings(vm);

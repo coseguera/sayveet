@@ -6,17 +6,17 @@ block content
         div.form-group
             label.col-sm-1.control-label(for="from") From
             div.col-sm-5
-                input.form-control(name="from", type="text", placeholder="From", data-bind="jqCalendar")
+                input#from.form-control(name="from", type="text", placeholder="From", data-bind="jqCalendar")
             label.col-sm-1.control-label(for="to") To
             div.col-sm-5
-                input.form-control(name="to", type="text", placeholder="To", data-bind="jqCalendar")
+                input#to.form-control(name="to", type="text", placeholder="To", data-bind="jqCalendar")
         div.form-group
             label.col-sm-1.control-label(for"by") By
             div.col-sm-5
-                select.form-control(name="by", data-bind="options: people, optionsValue: 'id', optionsText: 'name', optionsCaption: '---All---'")
+                select#by.form-control(name="by", data-bind="options: people, optionsValue: 'id', optionsText: 'name', optionsCaption: '---All---'")
             label.col-sm-1.control-label(for="on") On
             div.col-sm-5
-                select.form-control(name="on", data-bind="options: accounts, optionsValue: 'id', optionsText: 'name', optionsCaption: '---All---'")
+                select#on.form-control(name="on", data-bind="options: accounts, optionsValue: 'id', optionsText: 'name', optionsCaption: '---All---'")
         div.form-group
             div.col-sm-6.col-sm-offset-6
                 input.btn.btn-primary.btn-block(type="submit", value="Go")
