@@ -37,4 +37,7 @@ block content
                     td(data-bind="text: formattedAmount")
                     td
                         span(data-bind="text: personName")
-                        | ( #[span(data-bind="text: formattedAccountSumary")] )
+                        | ( #[span(data-bind="text: formattedPersonSummary")] )
+                    td
+                        span(data-bind="text: accountName")
+                        | ( #[span(data-bind="text: formattedAccountSummary")] )

@@ -1,3 +1,5 @@
+'use strict';
+
 var express = require('express');
 var router = express.Router();
 
@@ -10,12 +12,11 @@ router.get('/', function (req, res) {
         scripts: [
             '/lib/knockout/dist/knockout.js',
             '/lib/bootstrap-datepicker/dist/js/bootstrap-datepicker.js',
-            '/lib/sammy/lib/sammy.js'
+            '/lib/sammy/lib/sammy.js',
+            '/javascripts/transactions.js'
         ],
         page: { transactions: true }
     });
 });
 
 module.exports = router;
-
-/*scripts: ['/custom/js/transactions.js']*/
