@@ -15,10 +15,7 @@ var db = mongoose.createConnection(args.mongoInstance + args.dbName);
 modelFn();
 var repo = repoFn(db.model('Transaction'));
 
-inFn(args.fileName, processLine, function () {
-    process.stdout.write('\n');
-    mongoose.disconnect();
-});
+inFn(args.fileName, processLine, end);
 
 function processLine (line, callback) {
     var parts = line.split(','),
@@ -37,23 +34,23 @@ function processLine (line, callback) {
 
     if (isNaN(obj.date.getTime()) || isNaN(obj.amount)) {
         console.error('not a valid value!');
-        return callback();
+        return;
     }
 
     if (args.test) {
         console.log(JSON.stringify(obj));
-        return callback();
+        return;
     }
 
     repo.query(obj, function (err, result) {
         if (err) {
             console.error(err);
-            return callback(err);
+            return;
         }
 
         if (result.length > 0) {
             process.stdout.write('x');
-            return callback(err);
+            return;
         }
 
         repo.create(obj, function (createErr) {
@@ -62,7 +59,11 @@ function processLine (line, callback) {
             } else {
                 process.stdout.write('.');
             }
-            callback(createErr);
         });
     });
+}
+
+function end() {
+    process.stdout.write('\n');
+    mongoose.disconnect();
 }

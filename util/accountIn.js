@@ -15,12 +15,9 @@ var db = mongoose.createConnection(args.mongoInstance + args.dbName);
 modelFn();
 var repo = repoFn(db.model('Account'));
 
-inFn(args.fileName, processLine, function () {
-    process.stdout.write('\n');
-    mongoose.disconnect();
-});
+inFn(args.fileName, processLine, end);;
 
-function processLine (line, callback) {
+function processLine(line) {
     var parts = line.split(','),
         obj = {
             id: parts[0],
@@ -30,12 +27,12 @@ function processLine (line, callback) {
     repo.get(obj.id, function (err, result) {
         if (err) {
             console.error(err);
-            return callback(err);
+            return;
         }
 
         if (result) {
             process.stdout.write('x');
-            return callback(err);
+            return;
         }
 
         repo.create(obj, function (createErr) {
@@ -44,7 +41,11 @@ function processLine (line, callback) {
             } else {
                 process.stdout.write('.');
             }
-            callback(createErr);
         });
     });
+}
+
+function end() {
+    process.stdout.write('\n');
+    mongoose.disconnect();
 }
