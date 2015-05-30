@@ -1,34 +1,23 @@
 'use strict';
 
-module.exports = function (args) {
-    var result = {
-        mongoInstance: 'mongodb://localhost/'
-    };
+var program = require('commander');
 
-    for (var i = 0, len = args.length; i < len; i++) {
-        switch(args[i]) {
-            case '--db':
-                i++;
-                result.dbName = args[i];
-                break;
-            case '--instance':
-                i++;
-                result.mongoInstance = args[i];
-                break;
-            case '--round':
-                result.round = true;
-                break;
-        }
+module.exports = function (args, options) {
+    program
+    .version('0.0.0')
+    .option('--db <dbName>', 'Database name')
+    .option('--instance [instanceName]', 'The name of the (default: mongodb://localhost/)', 'mongodb://localhost/');
+    
+    if (options && options.round) {
+        program.option('--round', 'Round the amounts?');
     }
-
-    result.valid = !!result.mongoInstance &&
-        !!result.dbName;
-
-    if (!result.valid) {
-        process.stderr.write('usage: node programName --db databaseName ');
-        process.stderr.write('[--instance instanceName] [--round]\n');
-        process.stderr.write('example: node accountOut.js --db sayveet --round\n');
+    
+    program.parse(process.argv);
+    
+    if(!program.db || !program.instance) {
+        program.help();
+        return;
+    } else {
+        return program;
     }
-
-    return result;
 };

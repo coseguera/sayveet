@@ -3,14 +3,11 @@
 var mongoose = require('mongoose'),
     repoFn = require('./../models/db/transactionRepository'),
     modelFn = require('./../models/db/transactionModel'),
-    argsFn = require('./helpers/outArgs'),
-    argvs = process.argv.slice(2);
+    args = require('./helpers/outArgs')(process.argv, { round: true });
 
-var args = argsFn(argvs);
+if (!args) { return; }
 
-if (!args.valid) { return; }
-
-var db = mongoose.createConnection(args.mongoInstance + args.dbName);
+var db = mongoose.createConnection(args.instance + args.db);
 modelFn();
 var repo = repoFn(db.model('Transaction'));
 
