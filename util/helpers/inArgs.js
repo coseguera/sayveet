@@ -1,57 +1,40 @@
 /// <reference path="../../typings/node/node.d.ts"/>
 'use strict';
 
-var fs = require('fs');
-module.exports = function (args) {
-    var result = {
-        mongoInstance: 'mongodb://localhost/'
-    };
+var fs = require('fs'),
+    program = require('commander');
 
-    for (var i = 0, len = args.length; i < len; i++) {
-        switch(args[i]) {
-            case '--db':
-                i++;
-                result.dbName = args[i];
-                break;
-            case '--instance':
-                i++;
-                result.mongoInstance = args[i];
-                break;
-            case '--file':
-                i++;
-                var path = args[i];
-                if (fs.existsSync(path) && fs.lstatSync(path).isFile()) {
-                    result.fileName = path;
-                }
-                break;
-            case '--amountin':
-                i++;
-                var amountin = args[i];
-                if (amountin === 'dollars' || amountin === 'cents') {
-                    result.amountin = amountin;
-                }
-                break;
-            case '--silent':
-                result.silent = true;
-                break;
-            case '--test':
-                result.test = true;
-                break;
+module.exports = function (args, options) {
+    program
+    .version('0.0.0')
+    .option('--db <dbName>', 'Database name')
+    .option('--instance [instanceName]', 'The name of the (default: mongodb://localhost/)', 'mongodb://localhost/')
+    .option('--file <filePath>', 'File path');
+    
+    if(options && options.amountin) {
+        program.option('--amountin <value>', 'amount in (dollars|cents)');
+    }
+    
+    program
+    .option('--silent', 'do not output')
+    .option('--test', 'just test the command')
+    .parse(args);
+    
+    var valid = program.db && program.file;
+    
+    valid = valid && fs.existsSync(program.file) && fs.lstatSync(program.file).isFile();
+    
+    valid = valid && !(options && options.amountin && 
+    (!program.amountin || !(program.amountin === 'dollars' || program.amountin === 'cents')));
+    
+    if (valid) {
+        return program;
+    } else {
+        if (!program.silent) {
+            program.help();
         }
+        
+        return;
     }
-
-    result.valid = !!result.mongoInstance && 
-        !!result.dbName && 
-        !!result.fileName &&
-        !!result.amountin;
-
-    if (!result.valid && !result.silent) {
-        process.stderr.write('usage: node programName --db databaseName ');
-        process.stderr.write('[--instance instanceName] --file pathToFile ');
-        process.stderr.write('--amountin dollars|cents [--silent] [--test]\n');
-        process.stderr.write('example: node accountIn.js --db sayveet --amountin dollars ');
-        process.stdout.write('--file /Users/coseguera/Documents/ispentit_backup/accounts.txt\n');
-    }
-
-    return result;
+    return program;
 };

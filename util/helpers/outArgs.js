@@ -12,12 +12,12 @@ module.exports = function (args, options) {
         program.option('--round', 'Round the amounts?');
     }
     
-    program.parse(process.argv);
+    program.parse(args);
     
     if(!program.db || !program.instance) {
         program.help();
         return;
-    } else {
-        return program;
     }
+    
+    return program;
 };

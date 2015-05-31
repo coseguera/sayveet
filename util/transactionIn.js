@@ -3,21 +3,18 @@
 var mongoose = require('mongoose'),
     repoFn = require('./../models/db/transactionRepository'),
     modelFn = require('./../models/db/transactionModel'),
-    argsFn = require('./helpers/inArgs'),
     inFn = require('./helpers/in'),
-    argvs = process.argv.slice(2);
+    args = require('./helpers/inArgs')(process.argv, { amountin: true });
 
-var args = argsFn(argvs);
+if (!args) { return; }
 
-if (!args.valid) { return; }
-
-var db = mongoose.createConnection(args.mongoInstance + args.dbName);
+var db = mongoose.createConnection(args.instance + args.db);
 modelFn();
 var repo = repoFn(db.model('Transaction'));
 
-inFn(args.fileName, processLine, end);
+inFn(args.file, processLine, end);
 
-function processLine (line, callback) {
+function processLine (line, next) {
     var parts = line.split(','),
         obj = {
             date: new Date(parts[0]),
@@ -34,23 +31,23 @@ function processLine (line, callback) {
 
     if (isNaN(obj.date.getTime()) || isNaN(obj.amount)) {
         console.error('not a valid value!');
-        return;
+        return next();
     }
 
     if (args.test) {
         console.log(JSON.stringify(obj));
-        return;
+        return next();
     }
 
     repo.query(obj, function (err, result) {
         if (err) {
             console.error(err);
-            return;
+            return next();
         }
 
         if (result.length > 0) {
             process.stdout.write('x');
-            return;
+            return next();
         }
 
         repo.create(obj, function (createErr) {
@@ -59,6 +56,7 @@ function processLine (line, callback) {
             } else {
                 process.stdout.write('.');
             }
+            return next();
         });
     });
 }
