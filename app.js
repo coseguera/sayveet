@@ -35,6 +35,11 @@ app.use('/transactions', transactions);
 //app.use('/users', users);
 app.use('/api', api);
 
+app.use('/favicon.ico', function (req, res) {
+  res.writeHead(200, { 'Content-Type': 'image/x-icon' });
+  res.end();
+});
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
