@@ -5,7 +5,7 @@ var router = express.Router();
 var mongoose = require('mongoose');
 var logger = require('./../helpers/logger');
 
-var db = mongoose.createConnection('mongodb://localhost/sayveettestb');
+var db = mongoose.createConnection('mongodb://localhost/sayveet');
 
 var entities = [ 
     { name: 'account', model: 'Account' }, 
