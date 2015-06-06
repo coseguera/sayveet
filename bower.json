@@ -1,0 +1,31 @@
+{
+  "name": "sayveet",
+  "version": "0.0.0",
+  "homepage": "https://github.com/coseguera/sayveet",
+  "authors": [
+    "coseguera <coseguera@users.noreply.github.com>"
+  ],
+  "description": "node app for my expenses",
+  "main": "app.js",
+  "moduleType": [
+    "node"
+  ],
+  "keywords": [
+    "sayveet"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.4",
+    "bootstrap": "~3.3.4",
+    "knockout": "~3.3.0",
+    "bootstrap-datepicker": "~1.4.0",
+    "sammy": "~0.7.6"
+  }
+}
