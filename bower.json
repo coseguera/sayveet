@@ -26,6 +26,7 @@
     "bootstrap": "~3.3.4",
     "knockout": "~3.3.0",
     "bootstrap-datepicker": "~1.4.0",
-    "sammy": "~0.7.6"
+    "sammy": "~0.7.6",
+    "chartjs": "~1.0.2"
   }
 }
