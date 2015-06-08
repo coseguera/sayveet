@@ -9,12 +9,7 @@ router.get('/', function (req, res) {
         title: 'SayVeet Transactions',
         message: 'The transactions page to be built',
         styles: ['/lib/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css'],
-        scripts: [
-            '/lib/knockout/dist/knockout.js',
-            '/lib/bootstrap-datepicker/dist/js/bootstrap-datepicker.js',
-            '/lib/sammy/lib/sammy.js',
-            '/javascripts/transactions.js'
-        ],
+        script: 'app/transactions',
         page: { transactions: true }
     });
 })
