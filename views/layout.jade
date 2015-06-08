@@ -29,7 +29,4 @@ html
                             li(class=page.transactions ? "active" : "")
                                 a(href="/transactions") Transactions
             block content
-        if script
-            script(src="/lib/requirejs/require.js" data-main=script)
-        else
-            script(src="/lib/requirejs/require.js" data-main="/javascripts/sayveet")
+        script#require(src="/lib/requirejs/require.js" data-main="/javascripts/sayveet" data-load=script)
