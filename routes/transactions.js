@@ -17,6 +17,14 @@ router.get('/', function (req, res) {
         ],
         page: { transactions: true }
     });
+})
+/* GET reports page */
+.get('/reports', function (req, res) {
+    res.render('transaction/reports', {
+        title: 'SayVeet Reports',
+        script: 'app/reports',
+        page: { transactionReports: true }
+    });
 });
 
 module.exports = router;
