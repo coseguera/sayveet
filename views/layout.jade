@@ -5,7 +5,6 @@ html
         meta(http-equiv="X-UA-Compatible", content="IE=edge")
         meta(name="viewport", content="width=device-width, initial-scale=1")
         title= title
-        //link(rel='stylesheet', href='/stylesheets/style.css')
         link(rel="stylesheet", href="/lib/bootstrap/dist/css/bootstrap.css")
         if styles
             for style in styles
@@ -30,8 +29,7 @@ html
                             li(class=page.transactions ? "active" : "")
                                 a(href="/transactions") Transactions
             block content
-        script(src="/lib/jquery/dist/jquery.min.js")
-        script(src="/lib/bootstrap/dist/js/bootstrap.min.js")
+        script(src="/lib/requirejs/require.js" data-main="/javascripts/sayveet")
         if scripts
             for script in scripts
                 script(src=script)
