@@ -1,11 +1,3 @@
-require.config({
-	shim: {
-		'bootstrap': { 'deps': [ 'jquery' ] }
-	},
-	paths: {
-		'jquery': '/lib/jquery/dist/jquery.min',
-		'bootstrap': '/lib/bootstrap/dist/js/bootstrap.min'
-	}
+require(['/javascripts/require-config.js'], function () {
+	require(['jquery', 'bootstrap'], function () { });
 });
-
-require(['jquery', 'bootstrap'], function ($) { });

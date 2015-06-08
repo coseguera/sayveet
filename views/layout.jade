@@ -29,7 +29,7 @@ html
                             li(class=page.transactions ? "active" : "")
                                 a(href="/transactions") Transactions
             block content
-        script(src="/lib/requirejs/require.js" data-main="/javascripts/sayveet")
-        if scripts
-            for script in scripts
-                script(src=script)
+        if script
+            script(src="/lib/requirejs/require.js" data-main=script)
+        else
+            script(src="/lib/requirejs/require.js" data-main="/javascripts/sayveet")
