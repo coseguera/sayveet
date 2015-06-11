@@ -17,6 +17,7 @@ router.get('/', function (req, res) {
 .get('/reports', function (req, res) {
     res.render('transaction/reports', {
         title: 'SayVeet Reports',
+        styles: ['/lib/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css'],
         script: 'app/reports',
         page: { transactionReports: true }
     });
