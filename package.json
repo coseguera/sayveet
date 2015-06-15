@@ -6,7 +6,9 @@
     "start": "node ./bin/www",
     "test": "jasmine",
     "postinstall": "./node_modules/bower/bin/bower install",
-    "browserify": "browserify public/javascripts/transactions/reports.js > public/js/reports.js"
+    "browserify": "npm run browserify-transactions & npm run browserify-reports",
+    "browserify-transactions": "browserify public/javascripts/transactions/transactions.js > public/js/transactions.js",
+    "browserify-reports": "browserify public/javascripts/transactions/reports.js > public/js/reports.js"
   },
   "dependencies": {
     "body-parser": "^1.12.4",
