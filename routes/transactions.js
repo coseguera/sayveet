@@ -5,7 +5,7 @@ var router = express.Router();
 
 /* GET transactions page */
 router.get('/', function (req, res) {
-    res.render('transactions', {
+    res.render('transaction/transactions', {
         title: 'SayVeet Transactions',
         message: 'The transactions page to be built',
         styles: ['/lib/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css'],
