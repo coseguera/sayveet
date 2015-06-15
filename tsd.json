@@ -7,6 +7,12 @@
   "installed": {
     "express/express.d.ts": {
       "commit": "aadd63ecae3feb76ea2d4be80511e266b5c2c4a7"
+    },
+    "underscore/underscore.d.ts": {
+      "commit": "066819c65ff561ca109955e0b725c253e243f0a2"
+    },
+    "moment/moment.d.ts": {
+      "commit": "8005e28392b8acad19e8ff4a92249bafec795150"
     }
   }
 }

@@ -29,4 +29,10 @@ html
                             li(class=page.transactions ? "active" : "")
                                 a(href="/transactions") Transactions
             block content
-        script#require(src="/lib/requirejs/require.js" data-main="/javascripts/sayveet" data-load=script)
+        script(src="/lib/jquery/dist/jquery.js")
+        script(src="/lib/knockout/dist/knockout.js")
+        script(src="/lib/underscore/underscore.js")
+        script(src="/lib/moment/moment.js")
+        script(src="/lib/chartjs/Chart.js")
+        script(src="/lib/bootstrap-datepicker/dist/js/bootstrap-datepicker.js")
+        script(src="/js/reports.js")
