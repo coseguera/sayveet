@@ -18,7 +18,14 @@ router.get('/', function (req, res) {
     res.render('transaction/reports', {
         title: 'SayVeet Reports',
         styles: ['/lib/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css'],
-        script: 'app/reports',
+        scripts: [
+            '/lib/knockout/dist/knockout.js',
+            '/lib/underscore/underscore.js',
+            '/lib/moment/moment.js',
+            '/lib/chartjs/Chart.js',
+            '/lib/bootstrap-datepicker/dist/js/bootstrap-datepicker.js',
+            '/js/reports.js'
+        ],
         page: { transactionReports: true }
     });
 });

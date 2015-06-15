@@ -28,11 +28,11 @@ html
                                 a(href="/about") About
                             li(class=page.transactions ? "active" : "")
                                 a(href="/transactions") Transactions
+                            li(class=page.transactionReports ? "active" : "")
+                                a(href="/transactions/reports") Reports
             block content
         script(src="/lib/jquery/dist/jquery.js")
-        script(src="/lib/knockout/dist/knockout.js")
-        script(src="/lib/underscore/underscore.js")
-        script(src="/lib/moment/moment.js")
-        script(src="/lib/chartjs/Chart.js")
-        script(src="/lib/bootstrap-datepicker/dist/js/bootstrap-datepicker.js")
-        script(src="/js/reports.js")
+        script(src="/lib/bootstrap/dist/js/bootstrap.js")
+        if scripts
+            for script in scripts
+                script(src=script)
