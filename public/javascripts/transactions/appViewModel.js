@@ -1,6 +1,7 @@
 /// <reference path="../../../typings/node/node.d.ts"/>
 /// <reference path="../../../typings/jquery/jquery.d.ts" />
 /// <reference path="../../../typings/knockout/knockout.d.ts" />
+'use strict';
 
 var ko = require('knockout'),
     $ = require('jquery'),

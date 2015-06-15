@@ -2,6 +2,7 @@
 /// <reference path="../../../typings/knockout/knockout.d.ts" />
 /// <reference path="../../../typings/underscore/underscore.d.ts" />
 /// <reference path="../../../typings/moment/moment.d.ts" />
+'use strict';
 
 var $ = require('jquery'),
     ko = require('knockout'),
