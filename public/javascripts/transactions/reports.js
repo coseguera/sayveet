@@ -105,4 +105,4 @@ function processEntityData(transactions, labels, aggregate) {
 }
 
 function mapToDollarAmount(t) { return t.amount / 100; }
-function reduceSum(memo, t) { return memo + t; }
+function reduceSum(memo, t) { return Math.round((memo + t) * 100) / 100; }

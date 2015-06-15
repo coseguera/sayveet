@@ -2,6 +2,7 @@
 /// <reference path="../../../typings/node/node.d.ts"/>
 /// <reference path="../../../typings/jquery/jquery.d.ts" />
 /// <reference path="../../../typings/knockout/knockout.d.ts" />
+'use strict';
 
 var ko = (window.ko),
     $ = (window.$),
@@ -40,6 +41,7 @@ module.exports = {
 /// <reference path="../../../typings/knockout/knockout.d.ts" />
 /// <reference path="../../../typings/underscore/underscore.d.ts" />
 /// <reference path="../../../typings/moment/moment.d.ts" />
+'use strict';
 
 var $ = (window.$),
     ko = (window.ko),
@@ -142,5 +144,5 @@ function processEntityData(transactions, labels, aggregate) {
 }
 
 function mapToDollarAmount(t) { return t.amount / 100; }
-function reduceSum(memo, t) { return memo + t; }
+function reduceSum(memo, t) { return Math.round((memo + t) * 100) / 100; }
 },{"./appViewModel":1}]},{},[3]);
