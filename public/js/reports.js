@@ -63,13 +63,18 @@ var vm = new AppViewModel(processTransactions);
 ko.applyBindings(vm);
 
 function processTransactions(transactions, aggregates) {
-    var data = {};
+    var data = {},
+        dateLimits,
+        dateStep;
     
     if($by.val()) {
         transactions = _.where(transactions, { person: $by.val() });
     }
     
-    data.labels = processDataLabels(transactions);
+    dateLimits = getDateLimits(transactions);
+    dateStep = Math.ceil(dateLimits.max.diff(dateLimits.min, 'days') / 30);
+    
+    data.labels = datesBetween(dateLimits.min, dateLimits.max, dateStep);
     data.datasets = processDatasetArrays(transactions, aggregates.personSummaries, 'person', data.labels);
     
     if (chart) {
@@ -79,16 +84,17 @@ function processTransactions(transactions, aggregates) {
     chart = new Chart(ctx).Line(data, { responsive: true });
 }
 
-function processDataLabels(transactions) {
+function getDateLimits(transactions) {
     var moments = _.map(transactions, function (t) {
         return moment(t.date).startOf('day');
     });
-    return datesBetween(_.min(moments), _.max(moments));
+    return { min: _.min(moments), max: _.max(moments) };
 }
 
 function processDatasetArrays(transactions, aggregates, field, labels) {
     var group = _.groupBy(transactions, field),
         datasets = [],
+        aggregate,
         start,
         colorIndex = 0,
         color;
@@ -96,7 +102,8 @@ function processDatasetArrays(transactions, aggregates, field, labels) {
     for (var idx in group) {
         if(group.hasOwnProperty(idx)) {
             color = getColor(colorIndex++);
-            start = _.chain(aggregates).where({ _id: idx }).first().value().value;
+            aggregate = _.chain(aggregates).where({ _id: idx }).first().value();
+            start = aggregate ? aggregate.value : 0;
             datasets.push({ 
                 label: idx,
                 fillColor: formatString('rgba({0},{1},{2},0.2)', color.r, color.g, color.b),
@@ -118,8 +125,14 @@ function processEntityData(transactions, labels, aggregate) {
         start = aggregate / 100,
         value,
         map = _.map(transactions, function (t) {
+            var day = moment(t.date).startOf('day');
+            
+            while(labels.indexOf(day.format('MM/DD/YY')) < 0) {
+                day = day.add(1, 'days');
+            }
+            
             return { 
-                date: moment(t.date).startOf('day').format('MM/DD/YY'),
+                date: day.format('MM/DD/YY'),
                 amount: t.amount
             };
         });
@@ -141,14 +154,14 @@ function processEntityData(transactions, labels, aggregate) {
 function mapToDollarAmount(t) { return t.amount / 100; }
 function reduceSum(memo, t) { return Math.round((memo + t) * 100) / 100; }
 
-function datesBetween(start, end) {
+function datesBetween(start, end, step) {
     var result = [],
         m = moment(start);
         
     result.push(m.format('MM/DD/YY'));
     
-    while(!m.isSame(end)) {
-        m = moment(m).add(1, 'days');
+    while(m.diff(end) < 0) {
+        m = moment(m).add(step, 'days');
         result.push(m.format('MM/DD/YY'));
     }
     
