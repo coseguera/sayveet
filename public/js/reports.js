@@ -86,30 +86,25 @@ function processDataLabels(transactions) {
     return datesBetween(_.min(moments), _.max(moments));
 }
 
-function datesBetween(start, end) {
-    var result = [],
-        m = moment(start);
-        
-    result.push(m.format('MM/DD/YY'));
-    
-    while(!m.isSame(end)) {
-        m = moment(m).add(1, 'days');
-        result.push(m.format('MM/DD/YY'));
-    }
-    
-    return result;
-}
-
 function processDatasetArrays(transactions, aggregates, field, labels) {
     var group = _.groupBy(transactions, field),
         datasets = [],
-        start;
+        start,
+        colorIndex = 0,
+        color;
     
     for (var idx in group) {
         if(group.hasOwnProperty(idx)) {
+            color = getColor(colorIndex++);
             start = _.chain(aggregates).where({ _id: idx }).first().value().value;
             datasets.push({ 
                 label: idx,
+                fillColor: formatString('rgba({0},{1},{2},0.2)', color.r, color.g, color.b),
+                strokeColor: formatString('rgba({0},{1},{2},1)', color.r, color.g, color.b),
+                pointColor: formatString('rgba({0},{1},{2},1)', color.r, color.g, color.b),
+                pointStrokeColor: "#fff",
+                pointHighlightFill: "#fff",
+                pointHighlightStroke: formatString('rgba({0},{1},{2},1)', color.r, color.g, color.b),
                 data: processEntityData(group[idx], labels, start)
             });
         }
@@ -145,4 +140,42 @@ function processEntityData(transactions, labels, aggregate) {
 
 function mapToDollarAmount(t) { return t.amount / 100; }
 function reduceSum(memo, t) { return Math.round((memo + t) * 100) / 100; }
+
+function datesBetween(start, end) {
+    var result = [],
+        m = moment(start);
+        
+    result.push(m.format('MM/DD/YY'));
+    
+    while(!m.isSame(end)) {
+        m = moment(m).add(1, 'days');
+        result.push(m.format('MM/DD/YY'));
+    }
+    
+    return result;
+}
+
+function getColor(idx) {
+    var colors = [
+        { r: 220, g: 220, b: 220 },
+        { r: 223, g: 105, b: 26 },
+        { r: 92, g: 184, b: 92 },
+        { r: 91, g: 192, b: 222 },
+        { r: 240, g: 173, b: 78 }
+    ];
+    
+    return colors[idx % colors.length];
+}
+
+function formatString() {
+    var str = arguments[0],
+        args;
+    [].shift.call(arguments);
+    args = arguments;
+    return str.replace(/{(\d+)}/g, function(match, number) {
+        var res = typeof args[number] != 'undefined'
+            ? args[number] : match;
+        return res;
+    });
+}
 },{"./appViewModel":1}]},{},[3]);
