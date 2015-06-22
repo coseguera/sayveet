@@ -6,6 +6,7 @@
     "start": "node ./bin/www",
     "test": "jasmine",
     "lint": "jshint",
+    "tsd-reinstall": "tsd reinstall",
     "postinstall": "./node_modules/bower/bin/bower install",
     "browserify": "npm run browserify-transactions & npm run browserify-reports",
     "browserify-transactions": "browserify public/javascripts/transactions/transactions.js > public/js/transactions.js",
