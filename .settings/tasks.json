@@ -1,21 +1,21 @@
 {
     "version": "0.1.0",
-    "command": "gulp",
+    "command": "npm",
     "isShellCommand": true,
-    "args": [
-        "--no-color"
-    ],
     "tasks": [
         {
-            "taskName": "default",
+            "taskName": "lint",
             "isBuildCommand": true,
-            "showOutput": "always",
-            "problemMatcher": "$jshint"
+            "problemMatcher": "$jshint",
+            "args": [ "run" ]
         },
         {
             "taskName": "test",
-            "isTestCommand": true,
-            "showOutput": "silent"
+            "isTestCommand": true
+        },
+        {
+            "taskName": "browserify",
+            "args": [ "run" ]
         }
     ]
 }

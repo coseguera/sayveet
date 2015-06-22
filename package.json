@@ -5,6 +5,7 @@
   "scripts": {
     "start": "node ./bin/www",
     "test": "jasmine",
+    "lint": "jshint",
     "postinstall": "./node_modules/bower/bin/bower install",
     "browserify": "npm run browserify-transactions & npm run browserify-reports",
     "browserify-transactions": "browserify public/javascripts/transactions/transactions.js > public/js/transactions.js",
@@ -25,15 +26,14 @@
   "devDependencies": {
     "browserify": "^10.2.4",
     "browserify-shim": "^3.8.8",
-    "gulp": "^3.9.0",
-    "gulp-jasmine": "^2.0.1",
-    "gulp-jshint": "^1.11.0",
     "jasmine": "^2.3.1",
     "jshint": "^2.8.0",
     "tsd": "^0.6.1"
   },
   "browserify": {
-    "transform": [ "browserify-shim"]
+    "transform": [
+      "browserify-shim"
+    ]
   },
   "browserify-shim": {
     "jquery": "global:$",
