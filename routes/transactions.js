@@ -13,7 +13,6 @@ router.get('/', function (req, res) {
             '/lib/knockout/dist/knockout.js',
             '/lib/underscore/underscore.js',
             '/lib/moment/moment.js',
-            '/lib/chartjs/Chart.js',
             '/lib/bootstrap-datepicker/dist/js/bootstrap-datepicker.js',
             '/js/transactions.js'
         ],
@@ -24,12 +23,16 @@ router.get('/', function (req, res) {
 .get('/reports', function (req, res) {
     res.render('transaction/reports', {
         title: 'SayVeet Reports',
-        styles: ['/lib/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css'],
+        styles: [
+            '/lib/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css',
+            '/lib/c3/c3.css'
+        ],
         scripts: [
             '/lib/knockout/dist/knockout.js',
             '/lib/underscore/underscore.js',
             '/lib/moment/moment.js',
-            '/lib/chartjs/Chart.js',
+            '/lib/d3/d3.js',
+            '/lib/c3/c3.js',
             '/lib/bootstrap-datepicker/dist/js/bootstrap-datepicker.js',
             '/js/reports.js'
         ],

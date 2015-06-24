@@ -42,6 +42,6 @@
     "underscore": "global:_",
     "moment": "global:moment",
     "bootstrap-datepicker": "global:bootstrapDatepicker",
-    "Chart": "global:Chart"
+    "c3": "global:c3"
   }
 }

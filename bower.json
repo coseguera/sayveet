@@ -27,8 +27,8 @@
     "knockout": "~3.3.0",
     "bootstrap-datepicker": "~1.4.0",
     "sammy": "~0.7.6",
-    "chartjs": "~1.0.2",
     "underscore": "~1.8.3",
-    "moment": "~2.10.3"
+    "moment": "~2.10.3",
+    "c3": "~0.4.10"
   }
 }
