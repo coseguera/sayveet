@@ -5,7 +5,8 @@
         "linebreak-style": [2,"unix"],
         "semi": [2,"always"],
         "eol-last": 0,
-        "no-underscore-dangle": 0
+        "no-underscore-dangle": 0,
+        "new-cap": 0
     },
     "env": {
         "node": true,
