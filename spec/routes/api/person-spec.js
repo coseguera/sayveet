@@ -134,7 +134,7 @@ describe('person routes', function () {
             expect(resMock.sendStatus).toHaveBeenCalledWith(500);
             expect(resMock.json).not.toHaveBeenCalled();
         });
- 
+
         it('returns 404 if id is not present', function () {
             var repoMock = repositoryMock();
             repoMock.err = 0;
@@ -168,7 +168,7 @@ describe('person routes', function () {
 
             obj['/:id'].put(reqMock, resMock);
 
-            expect(resMock.sendStatus).toHaveBeenCalledWith(200);        
+            expect(resMock.sendStatus).toHaveBeenCalledWith(200);
         });
 
         it('returns 500 if there is an error', function () {
@@ -186,7 +186,7 @@ describe('person routes', function () {
 
             expect(resMock.sendStatus).toHaveBeenCalledWith(500);
         });
- 
+
         it('returns 404 if person doesnt exist', function () {
             var repoMock = repositoryMock();
             repoMock.err = 0;
@@ -203,7 +203,7 @@ describe('person routes', function () {
 
             expect(resMock.sendStatus).toHaveBeenCalledWith(404);
         });
- 
+
         it('returns 400 if no name is provided', function () {
             var repoMock = repositoryMock();
             repoMock.err = 0;
@@ -220,7 +220,7 @@ describe('person routes', function () {
 
             expect(resMock.sendStatus).toHaveBeenCalledWith(400);
         });
-   });
+    });
 
     describe(':id METHOD DELETE', function () {
         it('deletes a person in repo', function () {
@@ -236,7 +236,7 @@ describe('person routes', function () {
 
             obj['/:id'].delete(reqMock, resMock);
 
-            expect(resMock.sendStatus).toHaveBeenCalledWith(200);        
+            expect(resMock.sendStatus).toHaveBeenCalledWith(200);
         });
 
         it('returns 500 if there is an error', function () {
@@ -253,7 +253,7 @@ describe('person routes', function () {
 
             expect(resMock.sendStatus).toHaveBeenCalledWith(500);
         });
- 
+
         it('returns 404 if person doesnt exist', function () {
             var repoMock = repositoryMock();
             repoMock.err = 0;

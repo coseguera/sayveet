@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node ./bin/www",
     "test": "jasmine",
-    "lint": "jshint .",
+    "lint": "eslint -f compact .",
     "tsd-reinstall": "tsd reinstall --save",
     "postinstall": "./node_modules/bower/bin/bower install",
     "browserify": "npm run browserify-transactions & npm run browserify-reports",
@@ -27,8 +27,8 @@
   "devDependencies": {
     "browserify": "^10.2.4",
     "browserify-shim": "^3.8.8",
+    "eslint": "^0.24.0",
     "jasmine": "^2.3.1",
-    "jshint": "^2.8.0",
     "tsd": "^0.6.1"
   },
   "browserify": {

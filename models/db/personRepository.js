@@ -16,7 +16,7 @@ module.exports = function (Person) {
     };
 
     model.create = function (obj, callback) {
-        if (!obj.id || !obj.name) { 
+        if (!obj.id || !obj.name) {
             return callback('no id or name provided');
         }
 
@@ -30,7 +30,7 @@ module.exports = function (Person) {
     };
 
     model.update = function (obj, callback) {
-        if (!obj.id || !obj.name) { 
+        if (!obj.id || !obj.name) {
             return callback('no id or name provided');
         }
 

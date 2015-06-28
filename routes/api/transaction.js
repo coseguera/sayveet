@@ -4,7 +4,7 @@ module.exports = function (repo, logger) {
     function isValidDate(d) {
         return !isNaN(d.getTime());
     }
-    
+
     function aggregateQuery(from, res) {
         var result = {};
         repo.aggregate(from, '$account', function (err, accountSummaries) {
@@ -13,18 +13,18 @@ module.exports = function (repo, logger) {
                 res.sendStatus(500);
                 return;
             }
-            
+
             result.accountSummaries = accountSummaries;
-            
-            repo.aggregate(from, '$person', function (err, personSummaries) {
-                if (err) {
-                    logger.error(err);
+
+            repo.aggregate(from, '$person', function (errp, personSummaries) {
+                if (errp) {
+                    logger.error(errp);
                     res.sendStatus(500);
                     return;
                 }
-                
+
                 result.personSummaries = personSummaries;
-                
+
                 res.json(result);
             });
         });
@@ -34,14 +34,14 @@ module.exports = function (repo, logger) {
         '/': {
             get: function (req, res) {
                 var from;
-                
+
                 if (!req.query.from && !req.query.to) {
                     from = new Date();
                     from.setDate(from.getDate() - 30);
                 } else {
                     from = new Date(req.query.from);
                 }
-                
+
                 if (req.query.aggregates) {
                     aggregateQuery(from, res);
                 } else {
@@ -49,14 +49,14 @@ module.exports = function (repo, logger) {
                         from: from,
                         to: req.query.to
                     };
-                    
+
                     repo.query(query, function (err, result) {
                         if (err) {
                             logger.error(err);
                             res.sendStatus(500);
                             return;
                         }
-                        
+
                         res.json(result);
                     });
                 }
@@ -72,16 +72,16 @@ module.exports = function (repo, logger) {
 
                 if (!req.body.date ||
                     !isValidDate(obj.date) ||
-                    !obj.concept || 
-                    !obj.amount || 
+                    !obj.concept ||
+                    !obj.amount ||
                     isNaN(obj.amount) ||
-                    !obj.account || 
+                    !obj.account ||
                     !obj.person) {
                     res.sendStatus(400);
                     return;
                 }
 
-                if(req.body.splitId) {
+                if (req.body.splitId) {
                     obj.splitId = req.body.splitId;
                 }
 
@@ -100,7 +100,7 @@ module.exports = function (repo, logger) {
             get: function (req, res) {
                 var id = req.params.id;
 
-                repo.get(id, function (err, result){
+                repo.get(id, function (err, result) {
                     if (err) {
                         logger.error(err);
                         res.sendStatus(500);
@@ -137,7 +137,7 @@ module.exports = function (repo, logger) {
                     return;
                 }
 
-                if(req.body.splitId) {
+                if (req.body.splitId) {
                     obj.splitId = req.body.splitId;
                 }
 

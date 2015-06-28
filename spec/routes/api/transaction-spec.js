@@ -159,7 +159,7 @@ describe('transaction routes', function () {
             expect(resMock.sendStatus).toHaveBeenCalledWith(500);
             expect(resMock.json).not.toHaveBeenCalled();
         });
- 
+
         it('returns 404 if id is not present', function () {
             var repoMock = repositoryMock();
             repoMock.err = 0;
@@ -383,7 +383,7 @@ describe('transaction routes', function () {
 
             expect(resMock.sendStatus).toHaveBeenCalledWith(500);
         });
- 
+
         it('returns 404 if account doesnt exist', function () {
             var repoMock = repositoryMock();
             repoMock.err = 0;

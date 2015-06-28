@@ -15,7 +15,7 @@ module.exports = function (repo, logger) {
                 });
             },
             post: function (req, res) {
-                var obj = { 
+                var obj = {
                     id: req.body.id,
                     name: req.body.name
                 };

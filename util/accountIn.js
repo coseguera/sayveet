@@ -4,15 +4,12 @@ var mongoose = require('mongoose'),
     repoFn = require('./../models/db/accountRepository'),
     modelFn = require('./../models/db/accountModel'),
     inFn = require('./helpers/in'),
-    args = require('./helpers/inArgs')(process.argv);
-
-if (!args) { return; }
+    inArgs = require('./helpers/inArgs');
+var args = inArgs(process.argv);
 
 var db = mongoose.createConnection(args.instance + args.db);
 modelFn();
 var repo = repoFn(db.model('Account'));
-
-inFn(args.file, processLine, end);
 
 function processLine(line, next) {
     var parts = line.split(','),
@@ -51,4 +48,8 @@ function processLine(line, next) {
 function end() {
     process.stdout.write('\n');
     mongoose.disconnect();
+}
+
+if (args) {
+    inFn(args.file, processLine, end);
 }

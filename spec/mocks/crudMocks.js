@@ -5,7 +5,7 @@ exports.crudMock = function () {
         find: function (callback) {
             if (callback) {
                 callback(this.err, this.result);
-                return;
+                return undefined;
             }
             return this;
         },
@@ -39,7 +39,7 @@ exports.crudMock = function () {
         }
     };
 };
- 
+
 exports.CrudSaveMock = function () { };
 exports.CrudSaveMock.prototype.save = function (callback) {
     callback(this.err);

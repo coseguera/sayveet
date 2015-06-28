@@ -32,8 +32,8 @@ module.exports = function (Account) {
     };
 
     model.delete = function (id, callback) {
-        if (!id) { 
-            return callback('no id provided'); 
+        if (!id) {
+            return callback('no id provided');
         }
 
         Account.findOneAndRemove({ id: id }, callback);

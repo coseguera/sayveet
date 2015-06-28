@@ -6,7 +6,7 @@
         {
             "taskName": "lint",
             "isBuildCommand": true,
-            "problemMatcher": "$jshint",
+            "problemMatcher": "$eslint-compact",
             "args": [ "run" ]
         },
         {

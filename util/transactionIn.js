@@ -4,22 +4,20 @@ var mongoose = require('mongoose'),
     repoFn = require('./../models/db/transactionRepository'),
     modelFn = require('./../models/db/transactionModel'),
     inFn = require('./helpers/in'),
-    args = require('./helpers/inArgs')(process.argv, { amountin: true });
+    inArgs = require('./helpers/inArgs');
 
-if (!args) { return; }
+var args = inArgs(process.argv, { amountin: true });
 
 var db = mongoose.createConnection(args.instance + args.db);
 modelFn();
 var repo = repoFn(db.model('Transaction'));
 
-inFn(args.file, processLine, end);
-
-function processLine (line, next) {
+function processLine(line, next) {
     var parts = line.split(','),
         obj = {
             date: new Date(parts[0]),
             concept: parts[1],
-            amount: args.amountin === 'dollars' ? 
+            amount: args.amountin === 'dollars' ?
                 Math.round(parts[2] * 100) : parts[2],
             account: parts[3],
             person: parts[4]
@@ -64,4 +62,8 @@ function processLine (line, next) {
 function end() {
     process.stdout.write('\n');
     mongoose.disconnect();
+}
+
+if (args) {
+    inFn(args.file, processLine, end);
 }

@@ -48,14 +48,14 @@ module.exports = function (Transaction) {
         t.amount = obj.amount;
         t.person = obj.person;
         t.account = obj.account;
-        
+
         if(obj.splitId) { t.splitId = obj.splitId; }
 
         t.save(callback);
     };
 
     model.update = function (id, obj, callback) {
-        if (!id || !obj.date || !obj.concept || 
+        if (!id || !obj.date || !obj.concept ||
             !obj.amount || !obj.account || !obj.person) {
             return callback(
                 'no id, date, concept, amount, account or person provided');
